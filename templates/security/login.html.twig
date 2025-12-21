@@ -1,0 +1,69 @@
+{% extends 'security/login.base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <form method="post" action="{{ path('gestion_equipe_login') }}">
+        <div class="full_container">
+            <div class="container">
+                <div class="center verticle_center full_height">
+                    <div class="login_section">
+                        <div class="logo_login d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('images/logo.png') }}" alt="Gestion équipe" style="height:50px; margin-right:10px; position: relative; z-index: 10;">
+                            <h1 class="text-white m-0">
+                                GESTION EQUIPE
+                            </h1>
+                        </div>
+                        <div class="login_form">
+                            <fieldset>
+                                <div class="field mb-3">
+                                    <label class="label_field">
+                                        <b>
+                                            Adresse mail :
+                                        </b>
+                                    </label>
+                                    <input type="text" value="{{ last_username }}" name="_username" id="inputemail" class="form-control" autocomplete="username" required autofocus placeholder="exemple@domain.com"/>
+                                </div>
+                                <div class="field mb-3">
+                                    <label class="label_field">
+                                        <b>
+                                            Mot de passe :
+                                        </b>
+                                    </label>
+                                    <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required/>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <a class="forgot" href="{{ path('app_forgot_password_request') }}">
+                                        Mot de passe oublié ?
+                                    </a>
+                                    <button type="submit" class="btn btn-lg btn-primary">
+                                        Connexion
+                                    </button>
+                                </div>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            </fieldset> 
+                            {% if error %}
+                                <div class="alert alert-danger">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </div>
+                            {% endif %}
+                            {% for message in app.flashes('success') %}                                       
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>    
+                            {% endfor %}               
+                        </div>
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                Version {{ app_version }}
+                            </small>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div> 
+    </form>
+{% endblock %}
+
+
+

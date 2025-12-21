@@ -1,0 +1,67 @@
+{% extends 'security/login.base.html.twig' %}
+
+{% block title %}Mot de passe oublié ?{% endblock %}
+
+{% block body %}
+	{{ form_start(requestForm) }}
+		<div class="full_container">
+			<div class="container">
+				<div class="center verticle_center full_height">
+					<div class="login_section">
+						<div class="logo_login d-flex align-items-center justify-content-center">
+                            <img src="{{ asset('images/logo.png') }}" alt="Gestion équipe" style="height:50px; margin-right:10px; position: relative; z-index: 10;">
+                            <h1 class="text-white m-0">
+								GESTION EQUIPE
+							</h1>
+                        </div>
+						<div class="login_form">
+							{% for child in requestForm.children %}
+								{% if child.vars.errors is defined %}
+									{% for error in child.vars.errors %}
+										<div class="alert alert-danger mb-2">
+											{{ error.message|raw }}
+										</div>
+									{% endfor %}
+								{% endif %}
+							{% endfor %}
+							{% for label, messages in app.flashes %}
+								{% for message in messages %}
+									<div class="alert alert-{{ label }} alert-dismissible fade show mb-2" role="alert">
+										{{ message }}
+									</div>
+								{% endfor %}
+							{% endfor %}
+							<h4 class="text-center mb-3">Mot de passe oublié ?</h4>
+							<fieldset>
+								<div class="mb-3">
+									<b>
+										{{ form_label(requestForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
+									</b>
+									{{ form_widget(requestForm.email, {'attr': {'class': 'form-control'}}) }}
+								</div>
+								<div class="mb-3">
+									<small>
+										Entrez votre adresse mail professionnelle et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+									</small>
+								</div>
+								<div class="d-grid gap-2 mt-3">
+									<button class="btn btn-lg btn-primary">
+										Envoyer le lien de réinitialisation
+									</button>
+									<a href="{{ path('gestion_equipe_login') }}" class="btn btn-lg btn-warning">
+										Retour à l'interface connexion
+									</a>
+								</div>
+							</fieldset>
+						</div>
+						<div class="text-center mt-4 mb-3">
+							<small class="text-muted">
+								Version {{ app_version }}
+							</small>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ form_end(requestForm) }}
+{% endblock %}

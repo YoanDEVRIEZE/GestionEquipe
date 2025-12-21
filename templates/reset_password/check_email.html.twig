@@ -1,0 +1,56 @@
+{% extends 'security/login.base.html.twig' %}
+
+{% block title %}Confirmation{% endblock %}
+
+{% block body %}
+    <div class="full_container">
+		<div class="container">
+			<div class="center verticle_center full_height">
+                <div class="login_section">
+                    <div class="logo_login d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('images/logo.png') }}" alt="Gestion équipe" style="height:50px; margin-right:10px; position: relative; z-index: 10;">
+                        <h1 class="text-white m-0">
+                            GESTION EQUIPE
+                        </h1>
+                    </div>
+                    <div class="login_form">
+                        <div class="alert alert-success verticle_center text-center">
+                            <h2>
+                                Confirmation
+                            </h2>
+                        </div>
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <p>
+                            Si un compte correspondant à votre adresse mail professionnelle existe, un mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.
+                            <strong>
+                                Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}
+                            </strong>.
+                        </p>
+                        <p>
+                            Si vous ne recevez pas de mail, veuillez vérifier votre dossier spam ou
+                            <a style="color:blue" href="{{ path('app_forgot_password_request') }}">
+                                Renvoyer un nouveau mail
+                            </a>.
+                        </p>
+                        <div class="d-grid gap-2 mt-3">
+							<a href="{{ path('gestion_equipe_login') }}" class="btn btn-lg btn-warning">
+								Retour à l'interface connexion
+							</a>
+						</div>
+                    </div>
+                    <div class="text-center mt-3 mb-2">
+                        <small class="text-muted">
+                            Version {{ app_version }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

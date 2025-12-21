@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTDXHTML1.0Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>GESTION EQUIPE</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+		<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
+
+		<style type="text/css">
+			@import url('http://fonts.googleapis.com/css?family=Roboto:300');
+			body,
+			td {
+				font-family: 'Roboto', Arial, Helvetica, Geneva, sans-serif;
+				font-size: 13px;
+			}
+			body {
+				background-color: #F8F8F8;
+				margin: 0;
+				padding: 0;
+				-webkit-text-size-adjust: none;
+				-ms-text-size-adjust: none;
+			}
+			h2 {
+				padding: 0;
+				color: #181818;
+				font-size: 18px;
+			}
+			p {
+				color: #181818;
+				margin: 0;
+			}
+			a {
+				color: #181818;
+				padding: 0;
+			}
+
+			@media screen and(max-width: 680px) {
+				body {
+					padding: 15px;
+				}
+				table {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body style="margin:0px; -webkit-text-size-adjust:none;">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F8F8F8">
+			<tbody>
+				<tr>
+					<td align="center" bgcolor="#F8F8F8">
+						<table cellpadding="0" cellspacing="0" border="0" width="680" style="max-width:100%;">
+							<tbody>
+								<tr>
+									<td style="height: 4px;background-color: #E8E8E8;"></td>
+								</tr>
+								<tr>
+									<td align="center" style="background-color: #214162;padding-top:40px;padding-bottom: 40px;">
+										<h1 style="margin: 0;">
+											<a href="#">
+                                                <h1 style="color: #FFFFFF; text-decoration: none;">
+													GESTION EQUIPE
+												</h1>
+                                            </a>
+										</h1>
+									</td>
+								</tr>
+								<tr>
+									<td style="background-color: #F1F1F1;padding-top:40px;padding-right:40px;padding-bottom: 40px;padding-left:40px;">
+										<h2 style="font-size: 16px">
+                                            Bonjour,
+										</h2>
+										<p style="margin-bottom:10px;">
+											<strong>
+                                                Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant :
+                                            </strong>
+										</p>
+										<p style="margin-bottom:10px;">
+											<a href="{{ url('app_reset_password', {token: resetToken.token}) }}" style="display:inline-block;background-color:#FF5722;color:#FFFFFF;padding-top:10px;padding-right:30px;padding-bottom:10px;padding-left:30px;text-decoration:none;text-transform:uppercase;">
+												Réinitialiser mon mot de passe
+											</a>
+										</p>
+										<p>
+											<font color='red'>
+												<b>
+													ATTENTION :
+												</b>
+											</font>
+											<i>
+                                                Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                                            </i>
+                                            <br/>
+                                            Si vous ne changez pas votre mot de passe, celui-ci reste inchangé.
+										</p>
+									</td>
+								</tr>
+								<tr>
+									<td align="center" style="background-color: #214162;padding-top:15px;padding-bottom: 15px;">
+										<p style="font-size: 11px;color: #FFFFFF;margin-bottom: 0px;">
+                                            Version {{ app_version }}
+                                        </p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

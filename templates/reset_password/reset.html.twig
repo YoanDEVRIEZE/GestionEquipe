@@ -1,0 +1,83 @@
+{% extends 'security/login.base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+    <div class="full_container">
+        <div class="container">
+            <div class="center verticle_center full_height">
+                <div class="login_section">
+                    <div class="logo_login d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('images/logo.png') }}" alt="Gestion équipe" style="height:50px; margin-right:10px; position: relative; z-index: 10;">
+                        <h1 class="text-white m-0">
+                            GESTION EQUIPE
+                        </h1>
+                    </div>
+                    <div class="login_form">
+                        {% if resetForm.plainPassword.first.vars.errors|length > 0 %}
+                            <div class="alert alert-danger mb-3">
+                                {% for error in resetForm.plainPassword.first.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if resetForm.plainPassword.second.vars.errors|length > 0 %}
+                            <div class="alert alert-danger mb-3">
+                                {% for error in resetForm.plainPassword.second.vars.errors %}
+                                    {{ error.message }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <h4 class="text-center mb-4">
+                            Réinitialisation du mot de passe
+                        </h4>
+                        {{ form_start(resetForm) }}
+                        <fieldset>
+                            <p class="mb-3">
+                                <small>
+                                    <b>
+                                        <u>
+                                            Les contraintes pour changer votre mot de passe :
+                                        </u>
+                                    </b>
+                                    <div class="mt-1">
+                                        - Le mot de passe doit comporter au moins 8 caractères, incluant une lettre minuscule, une lettre majuscule, au moins un chiffre et un caractère spécial.
+                                    </div>
+                                    <div>
+                                        - Les deux mots de passe doivent être identiques.
+                                    </div>
+                                </small>
+                            </p>
+                            <div class="mb-3">
+                                <b>
+                                    {{ form_label(resetForm.plainPassword.first, null, {'label_attr': {'class': 'form-label'}}) }}
+                                </b>
+                                {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'form-control mb-3'}}) }}
+                            </div>
+                            <div class="mb-4">
+                                <b>
+                                    {{ form_label(resetForm.plainPassword.second, null, {'label_attr': {'class': 'form-label'}}) }}
+                                </b>
+                                {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="d-grid gap-2 mt-3">
+                                <button class="btn btn-lg btn-primary">
+                                    Modifier votre mot de passe
+                                </button>
+                                <a href="{{ path('gestion_equipe_login') }}" class="btn btn-lg btn-warning">
+                                    Retour à l'interface connexion
+                                </a>
+                            </div>
+                        </fieldset>
+                        {{ form_end(resetForm) }}
+                    </div>
+                    <div class="text-center mb-2">
+                        <small class="text-muted">
+                            Version {{ app_version }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
