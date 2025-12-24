@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+    <div class="container-fluid">
+        <div class="row g-3">
+            <div class="col-md-6">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.roles) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.password) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.lastName) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.emailPrivate) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.phonePro) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.companyId) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.adress) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.position) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.department) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.avatar) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.isActive) }}
+            </div>
+        </div>
+        <div class="text-end mt-3">
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

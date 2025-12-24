@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h3 mb-0">Profil de {{ user.firstName }} {{ user.lastName }}</h1>
+            <div>
+                <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary">
+                    ← Retour à la liste
+                </a>
+                <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-primary">
+                    Modifier
+                </a>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        {% if user.avatar %}
+                            <img src="{{ asset(user.avatar) }}" alt="Avatar" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                        {% else %}
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 150px; height: 150px;">
+                                <span class="text-muted">Aucun avatar</span>
+                            </div>
+                        {% endif %}
+                        <div>
+                            {% if user.isActive %}
+                                <span class="badge bg-success">Actif</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactif</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <table class="table table-borderless mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="text-muted w-25">ID</th>
+                                    <td>{{ user.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Email professionnel</th>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Rôles</th>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            <span class="badge bg-secondary">{{ role }}</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Prénom</th>
+                                    <td>{{ user.firstName }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Nom</th>
+                                    <td>{{ user.lastName }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Email personnel</th>
+                                    <td>{{ user.emailPrivate }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Téléphone personnel</th>
+                                    <td>{{ user.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Téléphone professionnel</th>
+                                    <td>{{ user.phonePro }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Identifiant du salarié</th>
+                                    <td>{{ user.companyId }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Poste occupé</th>
+                                    <td>{{ user.position }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Département</th>
+                                    <td>{{ user.department }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted">Adresse</th>
+                                    <td>{{ user.adress }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+                <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" style="display:inline;" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                    <button class="btn btn-sm btn-outline-danger" type="submit">
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
