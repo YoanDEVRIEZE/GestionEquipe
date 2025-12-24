@@ -148,7 +148,8 @@ class ResetPasswordController extends AbstractController
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-                'app_version' => $this->getParameter('app.version')
+                'app_version' => $this->getParameter('app.version'),
+                'firstName' => $user->getFirstName()
             ])
         ;
 
