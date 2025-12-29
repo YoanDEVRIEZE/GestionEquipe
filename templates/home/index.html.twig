@@ -1,20 +1,122 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block main_content %}
+    <h1 class="mb-4">Tableau de bord</h1>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Utilisateurs</h6>
+                    <h3>1 245</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Ventes</h6>
+                    <h3>320</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Chiffre d'affaires</h6>
+                    <h3>12 450 €</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Tickets ouverts</h6>
+                    <h3>8</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">Activité mensuelle</div>
+                <div class="card-body">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">Répartition</div>
+                <div class="card-body">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Dernières opérations</div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Utilisateur</th>
+                        <th>Action</th>
+                        <th class="text-end">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12/09/2025</td>
+                        <td>Yoan</td>
+                        <td>Achat</td>
+                        <td class="text-end">120 €</td>
+                    </tr>
+                    <tr>
+                        <td>11/09/2025</td>
+                        <td>Admin</td>
+                        <td>Abonnement</td>
+                        <td class="text-end">49 €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const bar = document.getElementById('barChart');
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/ddevriezeyoan/Library/Mobile Documents/com~apple~CloudDocs/Dev/GestionEquipe/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/ddevriezeyoan/Library/Mobile Documents/com~apple~CloudDocs/Dev/GestionEquipe/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+    if (bar) {
+        new Chart(bar, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+                datasets: [{
+                    label: 'Ventes',
+                    data: [12, 19, 8, 15, 22, 17]
+                }]
+            }
+        });
+    }
+
+    const pie = document.getElementById('pieChart');
+
+    if (pie) {
+        new Chart(pie, {
+            type: 'pie',
+            data: {
+                labels: ['Produits', 'Services', 'Abonnements'],
+                datasets: [{
+                    data: [45, 25, 30]
+                }]
+            }
+        });
+    }
+</script>
 {% endblock %}

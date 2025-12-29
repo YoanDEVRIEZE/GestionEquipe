@@ -35,27 +35,32 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => true,
-            ])
-            ->add('password', PasswordType::class, [
+            ]);
+
+        if (!$options['edit']) {
+            $builder->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
                 'constraints' => [
-                        new NotBlank(message: 'Veuillez saisir un mot de passe.'),
-                        new Length(
-                            min: 8,
-                            max: 4096,
-                            minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères.'
-                        ),
-                        new Regex(
-                            pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
-                            message: 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.'
-                        ),
-                        new NotCompromisedPassword(
-                            message: 'Ce mot de passe a été compromis lors d’une fuite de données. Veuillez en choisir un autre.'
-                        ),
-                    ],
-            ])
+                    new NotBlank(message: 'Veuillez saisir un mot de passe.'),
+                    new Length(
+                        min: 8,
+                        max: 4096,
+                        minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères.'
+                    ),
+                    new Regex(
+                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
+                        message: 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.'
+                    ),
+                    new NotCompromisedPassword(
+                        message: 'Ce mot de passe a été compromis lors d’une fuite de données. Veuillez en choisir un autre.'
+                    ),
+                ],
+            ]);
+        }
+
+        $builder
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => ['class' => 'form-control'],
@@ -116,6 +121,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'edit' => false,
         ]);
     }
 }

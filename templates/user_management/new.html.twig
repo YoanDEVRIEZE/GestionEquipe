@@ -2,20 +2,11 @@
 
 {% block title %}Créer un utilisateur{% endblock %}
 
-{% block body %}
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="h3 mb-0">Créer un utilisateur</h1>
-            <div>
-                <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary me-2">
-                    ← Retour à la liste
-                </a>
-            </div>
+{% block main_content %}
+    <h1 class="mb-4">Créer un utilisateur</h1>
+    <div class="d-flex justify-content-end gap-2 mb-3">
+            <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
+            <button type="submit" form="user_form" class="btn btn-primary">Créer l'utilisateur</button>
         </div>
-        <div class="card shadow-sm">
-            <div class="card-body">
-                {{ include('user_management/_form.html.twig', { button_label: 'Créer' }) }}
-            </div>
-        </div>
-    </div>
+    {{ include('user_management/_formAdd.html.twig') }}
 {% endblock %}

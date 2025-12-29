@@ -8,9 +8,6 @@
                 {{ form_row(form.roles) }}
             </div>
             <div class="col-md-6">
-                {{ form_row(form.password) }}
-            </div>
-            <div class="col-md-6">
                 {{ form_row(form.firstName) }}
             </div>
             <div class="col-md-6">
@@ -43,9 +40,6 @@
             <div class="col-md-6">
                 {{ form_row(form.isActive) }}
             </div>
-        </div>
-        <div class="text-end mt-3">
-            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
         </div>
     </div>
 {{ form_end(form) }}

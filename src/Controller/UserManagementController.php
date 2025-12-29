@@ -60,19 +60,12 @@ final class UserManagementController extends AbstractController
     }
 
     #[Route('/{id}/Modifier', name: 'gestion_equipe_user_management_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('password')->getData();
-
-            if ($plainPassword) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($hashedPassword);
-            }
-
             $entityManager->flush();
 
             $this->addFlash('success', 'Confirmation : les informations de l\'utilisateur ' 
