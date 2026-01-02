@@ -41,7 +41,7 @@ final class PositionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($position);
             $entityManager->flush();
-            $this->addFlash('success', 'Confirmation : Le poste ' . $position->getName() . ' a été créé avec succès.');
+            $this->addFlash('success', 'Confirmation : Le poste <b>' . $position->getName() . '</b> a été créé avec succès.');
 
             return $this->redirectToRoute('gestion_equipe_position_index', [], Response::HTTP_SEE_OTHER);
         }
