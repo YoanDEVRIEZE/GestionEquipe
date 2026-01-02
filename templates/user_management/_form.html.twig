@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="form-check mt-4">
+                {{ form_widget(form.isActive, { attr: { class: 'form-check-input' } }) }}
+                {{ form_label(form.isActive, null, { label_attr: { class: 'form-check-label' } }) }}
+                {{ form_errors(form.isActive) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.roles) }}
+            {% for choice in form.roles %}
+                <div class="form-check">
+                    {{ form_widget(choice, { attr: { class: 'form-check-input' } }) }}
+                    {{ form_label(choice, null, { label_attr: { class: 'form-check-label' } }) }}
+                </div>
+            {% endfor %}
+            {{ form_errors(form.roles) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.emailPrivate) }}
+            {{ form_widget(form.emailPrivate, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.emailPrivate) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.phone) }}
+            {{ form_widget(form.phone, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.phone) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.phonePro) }}
+            {{ form_widget(form.phonePro, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.phonePro) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.companyId) }}
+            {{ form_widget(form.companyId, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.companyId) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.adress) }}
+            {{ form_widget(form.adress, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.adress) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.position) }}
+            {{ form_widget(form.position, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.position) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.department) }}
+            {{ form_widget(form.department, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.department) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.avatar) }}
+            {{ form_widget(form.avatar, { attr: { class: 'form-control' } }) }}
+            {{ form_errors(form.avatar) }}
+        </div>
+    </div>
+</div>

@@ -9,7 +9,7 @@
             <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
             <button type="submit" class="btn btn-primary">Modifier l'utilisateur {{ user.firstName }} {{ user.lastName }}</button>
         </div>
-        {{ include('user_management/_formEdit.html.twig') }}
+        {{ include('user_management/_form.html.twig') }}
     {{ form_end(form) }}
 {% endblock %}
 

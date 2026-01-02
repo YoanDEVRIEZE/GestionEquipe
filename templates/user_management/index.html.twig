@@ -24,9 +24,9 @@
                     <th>Prénom</th>
                     <th>Email</th>
                     <th>Téléphone</th>
-                    <th>Poste</th>
-                    <th>Service</th>
-                    <th>Actif</th>
+                    <th>Poste occupé</th>
+                    <th>Département / Service</th>
+                    <th>Etat du compte</th>
                     <th class="text-end">Actions</th>
                 </tr>
             </thead>
@@ -42,7 +42,7 @@
                         <td>{{ user.department }}</td>
                         <td>
                             <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
-                                {{ user.isActive ? 'Oui' : 'Non' }}
+                                {{ user.isActive ? 'Actif' : 'Inactif' }}
                             </span>
                         </td>
                         <td class="text-end">

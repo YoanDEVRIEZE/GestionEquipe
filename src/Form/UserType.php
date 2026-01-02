@@ -21,10 +21,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => 'Email professionnel',
-                'attr' => ['class' => 'form-control'],
-                'required' => true,
+            ->add('isActive', CheckboxType::class, [
+                'label' => 'Activé le compte',
+                'required' => false,
             ])
             ->add('roles', ChoiceType::class, [
                 'label' => 'Rôles',
@@ -34,6 +33,11 @@ class UserType extends AbstractType
                 ],
                 'multiple' => true,
                 'expanded' => true,
+                'required' => true,
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email professionnel',
+                'attr' => ['class' => 'form-control'],
                 'required' => true,
             ]);
 
@@ -97,22 +101,18 @@ class UserType extends AbstractType
                 'required' => false,
             ])
             ->add('position', TextType::class, [
-                'label' => 'Poste',
+                'label' => 'Poste occupé',
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
             ])
             ->add('department', TextType::class, [
-                'label' => 'Département',
+                'label' => 'Département / Service',
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
             ])
             ->add('avatar', TextType::class, [
-                'label' => 'Avatar (URL)',
+                'label' => 'Photo de profil ',
                 'attr' => ['class' => 'form-control'],
-                'required' => false,
-            ])
-            ->add('isActive', CheckboxType::class, [
-                'label' => 'Actif',
                 'required' => false,
             ]);
     }

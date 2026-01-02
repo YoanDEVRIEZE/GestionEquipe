@@ -35,11 +35,13 @@ final class UserManagementController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('password')->getData();
+            $plainPassword = $form->get('companyId')->getData();
+            $roles = $form->get('roles')->getData();
+            $user->setRoles($roles);
 
             if($plainPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
