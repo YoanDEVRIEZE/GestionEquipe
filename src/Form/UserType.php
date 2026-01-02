@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Position;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -100,10 +102,15 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
             ])
-            ->add('position', TextType::class, [
+            ->add('position', EntityType::class, [
+                'class' => Position::class,
+                'choice_label' => 'name',
                 'label' => 'Poste occupé',
-                'attr' => ['class' => 'form-control'],
+                'placeholder' => 'Sélectionner un poste',
                 'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('department', TextType::class, [
                 'label' => 'Département / Service',

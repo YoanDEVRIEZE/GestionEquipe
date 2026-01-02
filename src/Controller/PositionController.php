@@ -55,7 +55,7 @@ final class PositionController extends AbstractController
     #[Route('/{id}/Consulter', name: 'gestion_equipe_position_show', methods: ['GET'])]
     public function show(Position $position, UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $users = $userRepository->findBy(['position' => $position->getName()]);
+        $users = $userRepository->findBy(['position' => $position]);
         $pagination = $paginator->paginate(
             $users,
             $request->query->getInt('page', 1),
