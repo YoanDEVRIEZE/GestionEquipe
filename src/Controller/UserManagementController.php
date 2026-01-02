@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,17 @@ use Symfony\Component\Routing\Attribute\Route;
 final class UserManagementController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $users = $userRepository->findAll();
+        $pagination = $paginator->paginate(
+            $users,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('user_management/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $pagination,
         ]);
     }
 

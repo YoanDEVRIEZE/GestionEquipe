@@ -61,5 +61,8 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="navigation mt-4">
+            {{ knp_pagination_render(users, 'pagination/bootstrap5.html.twig') }}
+        </div>
     </div>
 {% endblock %}

@@ -113,7 +113,7 @@ class UserType extends AbstractType
             ])
             ->add('isActive', CheckboxType::class, [
                 'label' => 'Actif',
-                'required' => true,
+                'required' => false,
             ]);
     }
 
