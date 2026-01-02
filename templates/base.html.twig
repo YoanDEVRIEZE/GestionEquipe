@@ -29,10 +29,15 @@
                             or app.request.attributes.get('_route') == 'gestion_equipe_user_management_edit' 
                             or app.request.attributes.get('_route') == 'gestion_equipe_user_management_show' 
                             or app.request.attributes.get('_route') == 'gestion_equipe_user_management_new' ? 'active' : '' }}" 
-                            href="{{ path('gestion_equipe_user_management_index') }}">Utilisateurs</a>
+                            href="{{ path('gestion_equipe_user_management_index') }}">Gestion Utilisateurs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Articles</a>
+                            <a class="nav-link text-white {{
+                            app.request.attributes.get('_route') == 'gestion_equipe_position_index' 
+                            or app.request.attributes.get('_route') == 'gestion_equipe_position_new' 
+                            or app.request.attributes.get('_route') == 'gestion_equipe_position_show' 
+                            or app.request.attributes.get('_route') == 'gestion_equipe_position_edit' ? 'active' : '' }}" 
+                            href="{{ path('gestion_equipe_position_index') }}">Gestion Postes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">Paramètres</a>

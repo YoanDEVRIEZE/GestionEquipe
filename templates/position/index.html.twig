@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Postes{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-4">Liste des postes</h1>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label == 'success' ? 'success' : (label == 'error' ? 'danger' : 'info') }} alert-dismissible fade show" role="alert">
+                {{ message|raw }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('gestion_equipe_position_new') }}" class="btn btn-primary">➕ Créer un poste</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for position in positions %}
+                <tr>
+                    <td>{{ position.id }}</td>
+                    <td>{{ position.name }}</td>
+                    <td class="text-end">
+                        <a href="{{ path('gestion_equipe_position_show', {'id': position.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                        <a href="{{ path('gestion_equipe_position_edit', {'id': position.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
+                        <form method="post" action="{{ path('gestion_equipe_position_delete', {'id': position.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le poste \'{{ position.name }}\' ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ position.id) }}">
+                            <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                        </form>
+                        </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center text-muted py-4">Aucun poste trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation mt-4">
+            {{ knp_pagination_render(positions, 'pagination/bootstrap5.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
