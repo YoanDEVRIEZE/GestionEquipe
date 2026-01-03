@@ -19,14 +19,24 @@ final class DepartmentController extends AbstractController
     #[Route(name: 'gestion_equipe_department_index', methods: ['GET'])]
     public function index(DepartmentRepository $departmentRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $countDepartment = $departmentRepository->count([]);
+
         $department = $paginator->paginate(
             $departmentRepository->findAll(),
             $request->query->getInt('page', 1),
             10
         );
 
+        $countUsersPerDepartment = [];
+        
+        foreach ($department as $dept) {
+            $countUsersPerDepartment[$dept->getId()] = $dept->getUsers()->count();
+        }
+
         return $this->render('department/index.html.twig', [
             'department' => $department,
+            'countUsersPerDepartment' => $countUsersPerDepartment,
+            'countDepartment' => $countDepartment,
         ]);
     }
 
@@ -62,9 +72,12 @@ final class DepartmentController extends AbstractController
             10
         );
 
+        $countUsers = $department->getUsers()->count();
+
         return $this->render('department/show.html.twig', [
             'department' => $department,
             'users' => $pagination,
+            'countUsers' => $countUsers,
         ]);
     }
 

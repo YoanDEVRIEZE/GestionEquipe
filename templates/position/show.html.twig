@@ -4,7 +4,12 @@
 
 {% block main_content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-4">Liste des utilisateurs au poste de {{ position.name }}</h1>
+        <h1 class="mb-1">
+            Liste des utilisateurs au poste de {{ position.name }}
+            <small class="text-muted d-block fs-6">
+                {{ countUsers }} utilisateur{{ countUsers > 1 ? 's' : '' }}
+            </small>
+        </h1>
         <div class="d-flex gap-2">
             <a href="{{ path('gestion_equipe_position_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
             <a href="{{ path('gestion_equipe_position_edit', {'id': position.id}) }}" class="btn btn-primary">Modifier</a>

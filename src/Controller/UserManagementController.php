@@ -21,6 +21,7 @@ final class UserManagementController extends AbstractController
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator, PositionRepository $positionRepository, DepartmentRepository $departmentRepository): Response
     {
+        $countUsers = $userRepository->count([]);
         $positions = $positionRepository->findAll();
 
         if ($positions === []) {
@@ -47,6 +48,7 @@ final class UserManagementController extends AbstractController
 
         return $this->render('user_management/index.html.twig', [
             'users' => $pagination,
+            'countUsers' => $countUsers,
         ]);
     }
 
@@ -81,7 +83,7 @@ final class UserManagementController extends AbstractController
 
             $mailPro = strtolower($user->getEmail());
             $user->setEmail($mailPro);
-            
+
             $mailPrivate = strtolower($user->getEmailPrivate());
             $user->setEmailPrivate($mailPrivate);
             

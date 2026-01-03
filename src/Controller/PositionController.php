@@ -19,15 +19,25 @@ final class PositionController extends AbstractController
     #[Route(name: 'gestion_equipe_position_index', methods: ['GET'])]
     public function index(PositionRepository $positionRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $countPosition = $positionRepository->count([]);
+
         $positions = $positionRepository->findAll();
         $pagination = $paginator->paginate(
             $positions,
             $request->query->getInt('page', 1),
             10
-        );  
+        ); 
+        
+        $countUsersPerPosition = [];
+
+        foreach ($positions as $pos) {
+            $countUsersPerPosition[$pos->getId()] = $pos->getUsers()->count();
+        }   
 
         return $this->render('position/index.html.twig', [
             'positions' => $pagination,
+            'countUsersPerPosition' => $countUsersPerPosition,
+            'countPosition' => $countPosition,
         ]);
     }
 
@@ -62,9 +72,12 @@ final class PositionController extends AbstractController
             10
         );
 
+        $countUsers = $position->getUsers()->count();
+
         return $this->render('position/show.html.twig', [
             'position' => $position,
             'users' => $pagination,
+            'countUsers' => $countUsers,
         ]);
     }
 

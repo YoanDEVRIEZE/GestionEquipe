@@ -3,7 +3,12 @@
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block main_content %}
-    <h1 class="mb-4">Liste des utilisateurs</h1>
+    <h1 class="mb-1">
+        Liste des utilisateurs
+        <small class="text-muted d-block fs-6">
+            {{ countUsers }} utilisateur{{ countUsers > 1 ? 's' : '' }}
+        </small>
+    </h1>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label == 'success' ? 'success' : (label == 'error' ? 'danger' : 'info') }} alert-dismissible fade show" role="alert">
