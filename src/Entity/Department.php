@@ -21,7 +21,7 @@ class Department
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'Department_Id')]
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'department')]
     private Collection $users;
 
     public function __construct()
