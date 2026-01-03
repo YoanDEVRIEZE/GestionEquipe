@@ -66,6 +66,24 @@ final class UserManagementController extends AbstractController
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
+
+            $compagnyId = strtoupper($user->getCompanyId());
+            $user->setCompanyId($compagnyId);
+
+            $lastname = strtoupper($user->getLastName());
+            $user->setLastName($lastname);
+
+            $firstname = ucfirst(strtolower($user->getFirstName()));
+            $user->setFirstName($firstname);
+
+            $adress = strtoupper($user->getAdress());
+            $user->setAdress($adress);
+
+            $mailPro = strtolower($user->getEmail());
+            $user->setEmail($mailPro);
+            
+            $mailPrivate = strtolower($user->getEmailPrivate());
+            $user->setEmailPrivate($mailPrivate);
             
             $entityManager->persist($user);
             $entityManager->flush();
@@ -96,6 +114,24 @@ final class UserManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $compagnyId = strtoupper($user->getCompanyId());
+            $user->setCompanyId($compagnyId);
+
+            $lastname = strtoupper($user->getLastName());
+            $user->setLastName($lastname);
+
+            $firstname = ucfirst(strtolower($user->getFirstName()));
+            $user->setFirstName($firstname);
+
+            $adress = strtoupper($user->getAdress());
+            $user->setAdress($adress);
+
+            $mailPro = strtolower($user->getEmail());
+            $user->setEmail($mailPro);
+
+            $mailPrivate = strtolower($user->getEmailPrivate());
+            $user->setEmailPrivate($mailPrivate);
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Confirmation : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
