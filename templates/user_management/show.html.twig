@@ -39,23 +39,23 @@
                             <tbody>
                                 <tr>
                                     <th class="text-muted">Identifiant du salarié</th>
-                                    <td>{{ user.companyId }}</td>
+                                    <td>{{ user.companyId ? user.companyId : '—' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Nom</th>
-                                    <td>{{ user.lastName }}</td>
+                                    <td>{{ user.lastName ? user.lastName : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Prénom</th>
-                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.firstName ? user.firstName : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Email professionnel</th>
-                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.email ? user.email : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Téléphone professionnel</th>
-                                    <td>{{ user.phonePro }}</td>
+                                    <td>{{ user.phonePro ? user.phonePro : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Poste occupé</th>
@@ -75,15 +75,15 @@
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Téléphone personnel</th>
-                                    <td>{{ user.phone }}</td>
+                                    <td>{{ user.phone ? user.phone : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Email personnel</th>
-                                    <td>{{ user.emailPrivate }}</td>
+                                    <td>{{ user.emailPrivate ? user.emailPrivate : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Adresse</th>
-                                    <td>{{ user.adress }}</td>
+                                    <td>{{ user.adress ? user.adress : '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>

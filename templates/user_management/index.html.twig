@@ -33,11 +33,11 @@
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td class="text-truncate align-middle">{{ user.companyId }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.lastName }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.firstName }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.email }}</td>
-                        <td class="d-none d-md-table-cell align-middle">{{ user.phonePro }}</td>
+                        <td class="text-truncate align-middle">{{ user.companyId ? user.companyId : '—' }}</td>
+                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.lastName ? user.lastName : '—' }}</td>
+                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
+                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
+                        <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.position ? user.position.name : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.department ? user.department.name : '—' }}</td>
                         <td class="align-middle text-center">
