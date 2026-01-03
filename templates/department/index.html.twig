@@ -19,15 +19,15 @@
         <table class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>Nom</th>
-                    <th class="text-end">Actions</th>
+                    <th class="align-middle">Nom</th>
+                    <th class="text-center align-middle">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for departments in department %}
                 <tr>
-                    <td>{{ departments.name }}</td>
-                    <td class="text-end">
+                    <td class="align-middle">{{ departments.name }}</td>
+                    <td class="text-center align-middle">
                         <a href="{{ path('gestion_equipe_department_show', {'id': departments.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_department_edit', {'id': departments.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
                         <form method="post" action="{{ path('gestion_equipe_department_delete', {'id': departments.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le service \'{{ departments.name }}\' ?');">

@@ -19,15 +19,15 @@
         <table class="table table-bordered table-striped table-hover mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>Nom</th>
-                    <th class="text-end">Actions</th>
+                    <th class="align-middle">Nom</th>
+                    <th class="text-center align-middle">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for position in positions %}
                 <tr>
-                    <td>{{ position.name }}</td>
-                    <td class="text-end">
+                    <td class="align-middle">{{ position.name }}</td>
+                    <td class="text-center align-middle">
                         <a href="{{ path('gestion_equipe_position_show', {'id': position.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_position_edit', {'id': position.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
                         <form method="post" action="{{ path('gestion_equipe_position_delete', {'id': position.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le poste \'{{ position.name }}\' ?');">
