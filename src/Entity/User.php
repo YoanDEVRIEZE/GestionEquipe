@@ -53,9 +53,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adress = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $department = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
@@ -65,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Position $position = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Departments $department = null;
 
     public function getId(): ?int
     {
@@ -225,18 +225,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDepartment(): ?string
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(?string $department): static
-    {
-        $this->department = $department;
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -269,6 +257,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPosition(?Position $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Departments
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Departments $department): static
+    {
+        $this->department = $department;
 
         return $this;
     }
