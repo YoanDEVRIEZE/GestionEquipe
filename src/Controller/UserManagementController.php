@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\DepartmentsRepository;
+use App\Repository\DepartmentRepository;
 use App\Repository\PositionRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class UserManagementController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator, PositionRepository $positionRepository, DepartmentsRepository $departmentsRepository): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator, PositionRepository $positionRepository, DepartmentRepository $departmentRepository): Response
     {
         $positions = $positionRepository->findAll();
 
@@ -29,12 +29,12 @@ final class UserManagementController extends AbstractController
             return $this->redirectToRoute('gestion_equipe_position_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $department = $departmentsRepository->findAll();
+        $department = $departmentRepository->findAll();
 
         if ($department === []) {
             $this->addFlash('error', 'Erreur : Aucun département / service n\'est défini. Veuillez créer des départements / services avant de gérer les utilisateurs.');
 
-            return $this->redirectToRoute('gestion_equipe_departments_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         
         }
 

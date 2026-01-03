@@ -45,11 +45,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white {{
-                                app.request.attributes.get('_route') == 'gestion_equipe_departments_index' 
-                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_new' 
-                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_show' 
-                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_edit' ? 'active' : '' }}" 
-                                href="{{ path('gestion_equipe_departments_index') }}">Gestion Département / Service</a>
+                                app.request.attributes.get('_route') == 'gestion_equipe_department_index' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_department_new' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_department_show' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_department_edit' ? 'active' : '' }}" 
+                                href="{{ path('gestion_equipe_department_index') }}">Gestion Services</a>
                             </li>
                         {% endif %}
                     </ul>

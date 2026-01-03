@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les départements / services{% endblock %}
+{% block title %}Les des services{% endblock %}
 
 {% block main_content %}
-    <h1 class="mb-4">Liste des départements / services</h1>
+    <h1 class="mb-4">Liste des services</h1>
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label == 'success' ? 'success' : (label == 'error' ? 'danger' : 'info') }} alert-dismissible fade show" role="alert">
@@ -13,7 +13,7 @@
         {% endfor %}
     {% endfor %}
     <div class="d-flex justify-content-end mb-3">
-        <a href="{{ path('gestion_equipe_departments_new') }}" class="btn btn-primary">➕ Créer un département ou un service</a>
+        <a href="{{ path('gestion_equipe_department_new') }}" class="btn btn-primary">➕ Créer un service</a>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover mb-0">
@@ -24,27 +24,27 @@
                 </tr>
             </thead>
             <tbody>
-            {% for department in departments %}
+            {% for departments in department %}
                 <tr>
-                    <td>{{ department.name }}</td>
+                    <td>{{ departments.name }}</td>
                     <td class="text-end">
-                        <a href="{{ path('gestion_equipe_departments_show', {'id': department.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
-                        <a href="{{ path('gestion_equipe_departments_edit', {'id': department.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
-                        <form method="post" action="{{ path('gestion_equipe_departments_delete', {'id': department.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le département ou le service \'{{ department.name }}\' ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ department.id) }}">
+                        <a href="{{ path('gestion_equipe_department_show', {'id': departments.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                        <a href="{{ path('gestion_equipe_department_edit', {'id': departments.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
+                        <form method="post" action="{{ path('gestion_equipe_department_delete', {'id': departments.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le service \'{{ departments.name }}\' ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ departments.id) }}">
                             <button class="btn btn-sm btn-outline-danger">Supprimer</button>
                         </form>
                         </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="9" class="text-center text-muted py-4">Aucun département ou service trouvé</td>
+                    <td colspan="9" class="text-center text-muted py-4">Aucun service trouvé</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         <div class="navigation mt-4">
-            {{ knp_pagination_render(departments, 'pagination/bootstrap5.html.twig') }}
+            {{ knp_pagination_render(department, 'pagination/bootstrap5.html.twig') }}
         </div>
     </div>
 {% endblock %}

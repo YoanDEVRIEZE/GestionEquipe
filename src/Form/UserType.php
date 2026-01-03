@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Departments;
+use App\Entity\Department;
 use App\Entity\Position;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -114,10 +114,10 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('department', EntityType::class, [
-                'class' => Departments::class,
+                'class' => Department::class,
                 'choice_label' => 'name',
-                'label' => 'Département / Service',
-                'placeholder' => 'Sélectionner un département / service',
+                'label' => 'Service',
+                'placeholder' => 'Sélectionner un service',
                 'required' => true,
                 'attr' => [
                     'class' => 'form-control',

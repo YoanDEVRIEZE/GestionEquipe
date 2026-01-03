@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DepartmentsRepository;
+use App\Repository\DepartmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DepartmentsRepository::class)]
-class Departments
+#[ORM\Entity(repositoryClass: DepartmentRepository::class)]
+class Department
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -58,7 +58,7 @@ class Departments
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setDepartmentId($this);
+            $user->setDepartment($this);
         }
 
         return $this;
@@ -68,8 +68,8 @@ class Departments
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getDepartmentId() === $this) {
-                $user->setDepartmentId(null);
+            if ($user->getDepartment() === $this) {
+                $user->setDepartment(null);
             }
         }
 

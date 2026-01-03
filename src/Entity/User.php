@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Position $position = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Departments $department = null;
+    private ?Department $department = null;
 
     public function getId(): ?int
     {
@@ -261,12 +261,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDepartment(): ?Departments
+    public function getDepartment(): ?Department
     {
         return $this->department;
     }
 
-    public function setDepartment(?Departments $department): static
+    public function setDepartment(?Department $department): static
     {
         $this->department = $department;
 
