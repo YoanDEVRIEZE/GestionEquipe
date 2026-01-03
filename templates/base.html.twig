@@ -16,37 +16,42 @@
         <div class="container-fluid">
             <div class="row">
                 <nav class="col-md-3 col-lg-2 bg-dark position-fixed top-0 start-0 vh-100 p-3">
-                    <h5 class="text-white mb-4">Gestion Equipe</h5>
+                    <div class="d-flex flex-column align-items-center justify-content-center mb-4">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="mb-2" style="max-height: 50px;">
+                        <h5 class="text-white m-0">Gestion Équipe</h5>
+                    </div>
                     <ul class="nav nav-pills flex-column gap-2">
                         <li class="nav-item">
                             <a class="nav-link text-white {{ 
                             app.request.attributes.get('_route') == 'gestion_equipe_home' ? 'active' : '' }}" 
                             href="{{ path('gestion_equipe_home') }}">Tableau de bord</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{ 
-                            app.request.attributes.get('_route') == 'gestion_equipe_user_management_index' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_user_management_edit' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_user_management_show' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_user_management_new' ? 'active' : '' }}" 
-                            href="{{ path('gestion_equipe_user_management_index') }}">Gestion Utilisateurs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{
-                            app.request.attributes.get('_route') == 'gestion_equipe_position_index' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_position_new' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_position_show' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_position_edit' ? 'active' : '' }}" 
-                            href="{{ path('gestion_equipe_position_index') }}">Gestion Postes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{
-                            app.request.attributes.get('_route') == 'gestion_equipe_departments_index' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_departments_new' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_departments_show' 
-                            or app.request.attributes.get('_route') == 'gestion_equipe_departments_edit' ? 'active' : '' }}" 
-                            href="{{ path('gestion_equipe_departments_index') }}">Gestion Département / Service</a>
-                        </li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ 
+                                app.request.attributes.get('_route') == 'gestion_equipe_user_management_index' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_user_management_edit' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_user_management_show' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_user_management_new' ? 'active' : '' }}" 
+                                href="{{ path('gestion_equipe_user_management_index') }}">Gestion Utilisateurs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{
+                                app.request.attributes.get('_route') == 'gestion_equipe_position_index' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_position_new' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_position_show' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_position_edit' ? 'active' : '' }}" 
+                                href="{{ path('gestion_equipe_position_index') }}">Gestion Postes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{
+                                app.request.attributes.get('_route') == 'gestion_equipe_departments_index' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_new' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_show' 
+                                or app.request.attributes.get('_route') == 'gestion_equipe_departments_edit' ? 'active' : '' }}" 
+                                href="{{ path('gestion_equipe_departments_index') }}">Gestion Département / Service</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
                 <main class="col-12 col-md-9 col-lg-10 offset-md-3 offset-lg-2 vh-100 overflow-auto p-4">

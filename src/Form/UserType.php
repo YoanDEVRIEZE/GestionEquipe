@@ -113,7 +113,7 @@ class UserType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('department_id', EntityType::class, [
+            ->add('department', EntityType::class, [
                 'class' => Departments::class,
                 'choice_label' => 'name',
                 'label' => 'Département / Service',
