@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/LesPostes')]
+#[Route('/Accueil/Admin/LesPostes')]
 final class PositionController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_position_index', methods: ['GET'])]

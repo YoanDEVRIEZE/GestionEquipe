@@ -1,0 +1,232 @@
+<button class="btn btn-dark d-md-none m-2" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+    <i class="bi bi-list"></i>
+</button>
+<nav id="sidebar" class="position-fixed top-0 start-0 vh-100 p-3 d-none d-md-flex flex-column">
+    <a href="{{ path('gestion_equipe_home') }}">
+        <div class="sidebar-header d-flex flex-column align-items-center mb-4">
+            <img src="{{ asset('images/logo.png') }}" alt="Gestion Équipe" title="Gestion Équipe"
+                class="mb-2 sidebar-logo">
+            <h5 class="text-white m-0 sidebar-title">Gestion Équipe</h5>
+        </div>
+    </a>
+    <ul class="nav nav-pills flex-column gap-2">
+        {% if is_granted('ROLE_USER') %}
+        <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
+            <b>Collaborateur</b>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+            app.request.attributes.get('_route') == 'gestion_equipe_home' ? 'active' : '' }}"
+            href="{{ path('gestion_equipe_home') }}" title="Tableau de bord collaborateur">
+                <i class="bi bi-speedometer2"></i>
+                <span class="menu-text">Tableau de bord</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-red text-white d-flex align-items-center gap-2" 
+            href="#" title="Mon équipe collaborateur">
+                <i class="bi bi-people"></i>
+                <span class="menu-text">Mon équipe</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-green text-white d-flex align-items-center gap-2" 
+            href="#" title="Coachings collaborateur">
+                <i class="bi bi-check-square"></i>
+                <span class="menu-text">Coachings</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-blue text-white d-flex align-items-center gap-2" 
+            href="#" title="Bilans collaborateur">
+                <i class="bi bi-clipboard-data"></i>
+                <span class="menu-text">Bilans</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2" 
+            href="#" title="Dysfonctionnements collaborateur">
+                <i class="bi bi-crosshair"></i>
+                <span class="menu-text">Dysfonctionnements</span>
+            </a>
+        </li>
+        {% endif %}
+        {% if app.user.position.name == "Manager" %}
+        <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
+            <b>Manager</b>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2" 
+            href="#" title="Tableau de bord manager">
+                <i class="bi bi-speedometer"></i>
+                <span class="menu-text">Tableau de bord</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-red text-white d-flex align-items-center gap-2" 
+            href="#" title="Mon équipe manager">
+                <i class="bi bi-people-fill"></i>
+                <span class="menu-text">Mon équipe</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-green text-white d-flex align-items-center gap-2" 
+            href="#" title="Coachings manager">
+                <i class="bi bi-check-square-fill"></i>
+                <span class="menu-text">Coachings</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-blue text-white d-flex align-items-center gap-2" 
+            href="#" title="Bilans manager">
+                <i class="bi bi-clipboard-check-fill"></i>
+                <span class="menu-text">Bilans</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2" 
+            href="#" title="Dysfontionnements manager">
+                <i class="bi bi-crosshair2"></i>
+                <span class="menu-text">Dysfontionnements</span>
+            </a>
+        </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
+            <b>Administrateur</b>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+            app.request.attributes.get('_route') starts with 'gestion_equipe_user_management' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_user_management_index') }}" title="Utilisateurs administrateur">
+                <i class="bi bi-person-fill-gear"></i>
+                <span class="menu-text">Utilisateurs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
+            app.request.attributes.get('_route') starts with 'gestion_equipe_position' ? 'active' : '' }}"
+            href="{{ path('gestion_equipe_position_index') }}" title="Postes administrateur">
+                <i class="bi bi-briefcase"></i>
+                <span class="menu-text">Postes</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link color-green text-white d-flex align-items-center gap-2 {{ 
+            app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
+            href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
+                <i class="bi bi-diagram-3"></i>
+                <span class="menu-text">Services</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<div class="offcanvas offcanvas-start bg-dark text-white d-md-none" id="mobileSidebar">
+    <div class="offcanvas-header">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo">
+        <h5 class="offcanvas-title text-white">Gestion Équipe</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="nav nav-pills flex-column gap-2">
+            {% if is_granted('ROLE_USER') %}
+            <li class="nav-item mt-2 mb-1 text-white text-uppercase small">
+                <b>Collaborateur</b>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white {{ 
+                app.request.attributes.get('_route') == 'gestion_equipe_home' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_home') }}" title="Tableau de bord collaborateur">
+                    <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-red text-white" 
+                href="#" title="Mon équipe collaborateur">
+                    <i class="bi bi-people me-2"></i> Mon équipe
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-red text-white" 
+                href="#" title="Coachings collaborateur">
+                    <i class="bi bi-check-square me-2"></i> Coachings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-green text-white" 
+                href="#" title="Bilans collaborateur">
+                    <i class="bi bi-clipboard-data me-2"></i> Bilans
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-blue text-white" 
+                href="#" title="Dysfonctionnements collaborateur">
+                    <i class="bi bi-crosshair me-2"></i> Dysfonctionnements
+                </a>
+            </li>
+            {% endif %}
+            {% if app.user.position.name == "Manager" %}
+            <li class="nav-item mt-2 mb-1 text-white text-uppercase small">
+                <b>Manager</b>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white" 
+                href="#" title="Tableau de bord manager">
+                    <i class="bi bi-speedometer me-2"></i> Tableau de bord
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-red text-white" 
+                href="#" title="Mon équipe manager">
+                    <i class="bi bi-people-fill me-2"></i> Mon équipe
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-green text-white" 
+                href="#" title="Coachings manager">
+                    <i class="bi bi-check-square-fill me-2"></i> Coachings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-blue text-white" 
+                href="#" title="Bilans manager">
+                    <i class="bi bi-clipboard-data-fill me-2"></i> Bilans
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white" 
+                href="#" title="Dysfonctionnements manager">
+                    <i class="bi bi-crosshair2 me-2"></i> Dysfonctionnements
+                </a>
+            </li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item mt-2 mb-1 text-white text-uppercase small">
+                <b>Administrateur</b>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_user_management' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_user_management_index') }}" title ="Utilisateurs administrateur">
+                    <i class="bi bi-person-fill-gear me-2"></i> Utilisateurs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-red text-white {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_position' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_position_index') }}" title="Postes administrateur">
+                    <i class="bi bi-briefcase me-2"></i> Postes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-green text-white {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
+                    <i class="bi bi-diagram-3 me-2"></i> Services
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

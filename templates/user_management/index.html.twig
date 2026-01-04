@@ -4,7 +4,7 @@
 
 {% block main_content %}
     <h1 class="mb-1">
-        Liste des utilisateurs
+        <i class="bi bi-people me-2"></i> Liste des utilisateurs
         <small class="text-muted d-block fs-6">
             {{ countUsers }} utilisateur{{ countUsers > 1 ? 's' : '' }}
         </small>
@@ -12,7 +12,7 @@
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label == 'success' ? 'success' : (label == 'error' ? 'danger' : 'info') }} alert-dismissible fade show" role="alert">
-                {{ message }}
+                {{ message|raw }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         {% endfor %}
@@ -25,9 +25,9 @@
             <thead class="table-light">
                 <tr>
                     <th class="align-middle">Identifiant</th>
-                    <th class="align-middle">Nom</th>
-                    <th class="align-middle">Prénom</th>
-                    <th class="align-middle">Email</th>
+                    <th class="d-none d-md-table-cell align-middle">Nom</th>
+                    <th class="d-none d-md-table-cell align-middle">Prénom</th>
+                    <th class="d-none d-md-table-cell align-middle">Email</th>
                     <th class="d-none d-md-table-cell align-middle">Téléphone</th>
                     <th class="d-none d-md-table-cell align-middle">Poste occupé</th>
                     <th class="d-none d-md-table-cell align-middle">Service</th>
@@ -39,9 +39,9 @@
                 {% for user in users %}
                     <tr>
                         <td class="text-truncate align-middle">{{ user.companyId ? user.companyId : '—' }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.lastName ? user.lastName : '—' }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
-                        <td class="text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.lastName ? user.lastName : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.position ? user.position.name : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.department ? user.department.name : '—' }}</td>

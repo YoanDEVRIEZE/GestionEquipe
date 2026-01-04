@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/Accueil/Utilisateurs/Gestion')]
+#[Route('/Accueil/Admin/Utilisateurs/Gestion')]
 final class UserManagementController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]

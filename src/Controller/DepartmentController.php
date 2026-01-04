@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/Services')]
+#[Route('/Accueil/Admin/Services')]
 final class DepartmentController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_department_index', methods: ['GET'])]

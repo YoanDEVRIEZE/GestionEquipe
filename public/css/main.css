@@ -322,6 +322,17 @@ a:focus {
     width: 250px;
     transition: width 0.3s ease;
     background-color: #212529;
+    height: 100vh;     
+    overflow-y: auto;    
+    scrollbar-width: thin;
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.offcanvas-body {
+    overflow-y: auto;
 }
 
 .sidebar-logo {
@@ -375,4 +386,28 @@ a:focus {
 .offcanvas-header img {
     max-height: 32px;
     margin-right: 8px;
+}
+
+.nav-pills .nav-link.color-yellow.active,
+.nav-pills .nav-link.color-yellow:hover {
+    background-color: #e2ab05 !important;
+    color: #000;
+}
+
+.nav-pills .nav-link.color-red.active,
+.nav-pills .nav-link.color-red:hover {
+    background-color: #dc3545 !important;
+    color: #fff;
+}
+
+.nav-pills .nav-link.color-green.active,
+.nav-pills .nav-link.color-green:hover {
+    background-color: #28a745 !important;
+    color: #fff;
+}
+
+.nav-pills .nav-link.color-blue.active,
+.nav-pills .nav-link.color-blue:hover {
+    background-color: #007bff !important;
+    color: #fff;
 }
