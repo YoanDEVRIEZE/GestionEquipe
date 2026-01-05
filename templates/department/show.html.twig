@@ -42,7 +42,11 @@
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.phonePro }}</td>
-                        <td>{{ user.position ? user.position.name : '-' }}</td>
+                        <td>
+                            {% for roles in user.roles %}
+                                {{ roles }}
+                            {% endfor %}
+                        </td>
                         <td>{{ user.department ? user.department.name : '-' }}</td>
                         <td>
                             <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">

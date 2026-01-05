@@ -61,19 +61,23 @@
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Poste occupé</th>
-                                    <td>{{ user.position ? user.position.name : '-' }}</td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            {% if role == "ROLE_USER" %}
+                                                <span class="badge bg-primary">Utilisateur</span>
+                                            {% endif %}
+                                            {% if role == "ROLE_MANAGER" %}
+                                                <span class="badge bg-warning">Manager</span>
+                                            {% endif %}
+                                            {% if role == 'ROLE_ADMIN' %}
+                                                <span class="badge bg-danger">Administrateur</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Service</th>
                                     <td>{{ user.department ? user.department.name : '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted">Rôles</th>
-                                    <td>
-                                        {% for role in user.roles %}
-                                            <span class="badge bg-secondary">{{ role }}</span>
-                                        {% endfor %}
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="text-muted">Téléphone personnel</th>

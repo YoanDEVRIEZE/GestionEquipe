@@ -43,7 +43,19 @@
                         <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
                         <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
-                        <td class="d-none d-md-table-cell align-middle">{{ user.position ? user.position.name : '—' }}</td>
+                        <td class="d-none d-md-table-cell align-middle">
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_USER" %}
+                                    <span class="badge bg-primary">Utilisateur</span>
+                                {% endif %}
+                                {% if role == "ROLE_MANAGER" %}
+                                    <span class="badge bg-warning">Manager</span>
+                                {% endif %}
+                                {% if role == 'ROLE_ADMIN' %}
+                                    <span class="badge bg-danger">Administrateur</span>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.department ? user.department.name : '—' }}</td>
                         <td class="align-middle text-center">
                             <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">

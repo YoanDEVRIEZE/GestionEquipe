@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\RolesEnum;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -23,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column(enumType: RolesEnum::class)]
     private array $roles = [];
 
     /**
@@ -60,10 +61,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isActive = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Position $position = null;
-
-    #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Department $department = null;
 
     public function getId(): ?int
@@ -98,7 +95,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = array_map(
+            fn (RolesEnum $role) => $role->value,
+            $this->roles
+        );
 
         return array_unique($roles);
     }
@@ -243,18 +243,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    public function getPosition(): ?Position
-    {
-        return $this->position;
-    }
-
-    public function setPosition(?Position $position): static
-    {
-        $this->position = $position;
 
         return $this;
     }

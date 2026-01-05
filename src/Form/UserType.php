@@ -3,15 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Department;
-use App\Entity\Position;
 use App\Entity\User;
+use App\Enum\RolesEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -27,16 +27,6 @@ class UserType extends AbstractType
             ->add('isActive', CheckboxType::class, [
                 'label' => 'Activé le compte',
                 'required' => false,
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'Rôles',
-                'choices' => [
-                    'Utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                ],
-                'multiple' => true,
-                'expanded' => true,
-                'required' => true,
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email professionnel',
@@ -103,15 +93,19 @@ class UserType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
             ])
-            ->add('position', EntityType::class, [
-                'class' => Position::class,
-                'choice_label' => 'name',
-                'label' => 'Poste occupé',
-                'placeholder' => 'Sélectionner un poste',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
+            ->add('roles', EnumType::class, [
+                'class' => RolesEnum::class,
+                'label' => 'Poste(s) occupé(s)',
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => [
+                    RolesEnum::ROLE_USER,
+                    RolesEnum::ROLE_MANAGER,
+                    RolesEnum::ROLE_ADMIN,
                 ],
+                'choice_label' => fn (RolesEnum $choice) => $choice->label(),
+                'choice_value' => fn ($choice) =>
+                    $choice instanceof RolesEnum ? $choice->value : $choice,
             ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
@@ -120,7 +114,7 @@ class UserType extends AbstractType
                 'placeholder' => 'Sélectionner un service',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-select',
                 ],
             ])
             ->add('avatar', TextType::class, [
