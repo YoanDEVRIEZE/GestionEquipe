@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DepartmentRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -16,7 +17,9 @@ class Department
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 100)]
+    #[Assert\Length(max : 100, message : '100 caractères maximum')]
+    #[Assert\NotBlank(message: 'Le nom du service est obligatoire')]
     private ?string $name = null;
 
     /**
@@ -25,7 +28,8 @@ class Department
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'department')]
     private Collection $users;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true, length: 500)]
+    #[Assert\Length(max : 500, message : '500 caractères maximum')]
     private ?string $description = null;
 
     public function __construct()

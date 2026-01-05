@@ -5,7 +5,7 @@
             {{ form_widget(form.name) }}
             <b style="color: red;">{{ form_errors(form.name) }}</b>
             <small class="form-text text-muted d-block mt-1">
-                Le nom du service.
+                {{ form_help(form.name) }}
             </small>
         </div>
         <div class="col-md-6">
@@ -13,7 +13,7 @@
             {{ form_widget(form.description) }}
             <b style="color: red;">{{ form_errors(form.description) }}</b>
             <small class="form-text text-muted d-block mt-1">
-                La description du service.
+                {{ form_help(form.description) }}
             </small>
         </div>
     </div>

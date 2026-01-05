@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DepartmentType extends AbstractType
 {
@@ -16,31 +17,22 @@ class DepartmentType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom du service',
+                'label' => 'Nom du service <sup style="color : red;">*</sup>',
+                'label_html' => true,
+                'help' => 'Le nom du service. (100 caractères maximum)',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Entrez le nom du service',
+                    'placeholder' => 'Entrez le nom du service (100 caractères maximum)',
                     'rows' => 2,
-                ],
-                'required' => true,
-                'constraints' => [
-                    new Length(
-                        max: 100
-                    ),
                 ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du service',
+                'help' => 'La description du service. (500 caractères maximun)',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Entrez une description pour le service',
-                    'rows' => 4,
-                ],
-                'required' => false,
-                'constraints' => [
-                    new Length(
-                        max: 500
-                    ),
+                    'rows' => 6,
                 ],
             ])
         ;
