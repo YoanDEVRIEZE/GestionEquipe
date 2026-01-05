@@ -7,7 +7,6 @@ use App\Form\DepartmentType;
 use App\Repository\DepartmentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,16 +16,10 @@ use Symfony\Component\Routing\Attribute\Route;
 final class DepartmentController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_department_index', methods: ['GET'])]
-    public function index(DepartmentRepository $departmentRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(DepartmentRepository $departmentRepository): Response
     {
+        $department = $departmentRepository->findAll();
         $countDepartment = $departmentRepository->count([]);
-
-        $department = $paginator->paginate(
-            $departmentRepository->findAll(),
-            $request->query->getInt('page', 1),
-            10
-        );
-
         $countUsersPerDepartment = [];
         
         foreach ($department as $dept) {
@@ -63,20 +56,13 @@ final class DepartmentController extends AbstractController
     }
 
     #[Route('/{id}/Consulter', name: 'gestion_equipe_department_show', methods: ['GET'])]
-    public function show(Department $department, UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
+    public function show(Department $department, UserRepository $userRepository): Response
     {
-        $users = $userRepository->findBy(['department' => $department]);
-        $pagination = $paginator->paginate(
-            $users,
-            $request->query->getInt('page', 1),
-            10
-        );
-
         $countUsers = $department->getUsers()->count();
 
         return $this->render('department/show.html.twig', [
             'department' => $department,
-            'users' => $pagination,
+            'users' => $userRepository->findBy(['department' => $department]),
             'countUsers' => $countUsers,
         ]);
     }

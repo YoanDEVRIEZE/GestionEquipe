@@ -2,6 +2,10 @@
 
 {% block title %}Liste des services{% endblock %}
 
+{% block stylestylesheets %}
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block main_content %}
     <h1 class="mb-1">
         <i class="bi bi-diagram-3 me-2"></i> Liste des services
@@ -17,43 +21,70 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <div class="d-flex justify-content-end mb-3">
-        <a href="{{ path('gestion_equipe_department_new') }}" class="btn btn-primary">➕ Créer un service</a>
+    <div class="d-flex justify-content-end align-items-center mb-3" id="datatable-controls">
+        <a href="{{ path('gestion_equipe_department_new') }}" class="btn btn-primary ms-2">➕ Créer un service</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover table-sm mb-0">
+        <table id="departmentTable" class="table table-bordered table-striped table-hover table-sm mb-0">
             <thead class="table-light">
                 <tr>
-                    <th class="align-middle" style="max-width: 120px;">Nom</th>
-                    <th class="align-middle" style="max-width: 120px;">Description</th>
-                    <th class="text-center align-middle" style="max-width: 120px;">Nombre d'utilisateurs</th>
-                    <th class="text-center align-middle" style="max-width: 120px;">Actions</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th class="text-center">Nombre d'utilisateurs</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for departments in department %}
                 <tr>
-                    <td class="align-middle" style="max-width: 120px;">{{ departments.name }}</td>
-                    <td class="align-middle text-truncate" style="max-width: 120px;">{{ departments.description }}</td>
-                    <td class="text-center align-middle" style="max-width: 120px;">{{ countUsersPerDepartment[departments.id] }}</td>
-                    <td class="text-center align-middle" style="max-width: 120px;">
+                    <td>{{ departments.name }}</td>
+                    <td class="text-truncate" style="max-width: 250px;">{{ departments.description }}</td>
+                    <td class="text-center">{{ countUsersPerDepartment[departments.id] }}</td>
+                    <td class="text-center">
                         <a href="{{ path('gestion_equipe_department_show', {'id': departments.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_department_edit', {'id': departments.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
                         <form method="post" action="{{ path('gestion_equipe_department_delete', {'id': departments.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer le service \'{{ departments.name }}\' ?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ departments.id) }}">
                             <button class="btn btn-sm btn-outline-danger">Supprimer</button>
                         </form>
-                        </td>
+                    </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="9" class="text-center text-muted py-4">Aucun service trouvé</td>
+                    <td colspan="4" class="text-center text-muted py-4">Aucun service trouvé</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <div class="navigation mt-4">
-            {{ knp_pagination_render(department, 'pagination/bootstrap5.html.twig') }}
-        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        if ($('#departmentTable tbody tr').length > 0) {
+            $(document).ready(function () {
+                var table = $('#departmentTable').DataTable({
+                    paging: true,
+                    ordering: true,
+                    info: false,
+                    columnDefs: [
+                        { orderable: false, targets: -1 }
+                    ],
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+                    },
+                    dom: 'ft<"d-flex justify-content-end mt-4"p>',
+                    initComplete: function () {
+                        $('#departmentTable_filter').prependTo('#datatable-controls');
+                        $('#departmentTable_filter').addClass('d-flex align-items-center mb-0 text-black').css('margin-top', '-20px', 'width: 50px');
+                        $('#departmentTable_filter input').addClass('form-control form-control-sm me-2 text-black').css('max-width', '150px').css('border', '1px solid black');
+                        $('#departmentTable_filter label').addClass('mb-0 text-black');
+                    }
+                });
+            });
+        }
+    </script>
 {% endblock %}

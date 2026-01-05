@@ -2,6 +2,10 @@
 
 {% block title %}Liste des utilisateurs{% endblock %}
 
+{% block stylestylesheets %}
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block main_content %}
     <h1 class="mb-1">
         <i class="bi bi-person-fill-gear me-2"></i> Liste des utilisateurs
@@ -17,33 +21,33 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <div class="d-flex justify-content-end mb-3">
-        <a href="{{ path('gestion_equipe_user_management_new') }}" class="btn btn-primary">➕ Créer un utilisateur</a>
+    <div class="d-flex justify-content-end align-items-center mb-3" id="datatable-controls">
+        <a href="{{ path('gestion_equipe_user_management_new') }}" class="btn btn-primary ms-2">➕ Créer un utilisateur</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover table-sm mb-0">
+        <table id="userTable" class="table table-bordered table-striped table-hover table-sm mb-0">
             <thead class="table-light">
                 <tr>
-                    <th class="align-middle">Identifiant</th>
-                    <th class="d-none d-md-table-cell align-middle">Nom</th>
-                    <th class="d-none d-md-table-cell align-middle">Prénom</th>
-                    <th class="d-none d-md-table-cell align-middle">Email</th>
-                    <th class="d-none d-md-table-cell align-middle">Téléphone</th>
-                    <th class="d-none d-md-table-cell align-middle">Poste occupé</th>
-                    <th class="d-none d-md-table-cell align-middle">Service</th>
-                    <th class="align-middle text-center">Etat du compte</th>
-                    <th class="text-end align-middle text-center">Actions</th>
+                    <th>Identifiant</th>
+                    <th class="d-none d-md-table-cell">Nom</th>
+                    <th class="d-none d-md-table-cell">Prénom</th>
+                    <th class="d-none d-md-table-cell">Email</th>
+                    <th class="d-none d-md-table-cell">Téléphone</th>
+                    <th class="d-none d-md-table-cell">Poste occupé</th>
+                    <th class="d-none d-md-table-cell">Service</th>
+                    <th>État du compte</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td class="text-truncate align-middle">{{ user.companyId ? user.companyId : '—' }}</td>
-                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.lastName ? user.lastName : '—' }}</td>
-                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
-                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
-                        <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
-                        <td class="d-none d-md-table-cell align-middle">
+                        <td class="text-truncate">{{ user.companyId ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.lastName ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.firstName ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.email ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell">{{ user.phonePro ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell">
                             {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
                             {% for role in rolesOrder %}
                                 {% if role in user.roles %}
@@ -57,13 +61,13 @@
                                 {% endif %}
                             {% endfor %}
                         </td>
-                        <td class="d-none d-md-table-cell align-middle">{{ user.department ? user.department.name : '—' }}</td>
-                        <td class="align-middle text-center">
+                        <td class="d-none d-md-table-cell">{{ user.department ? user.department.name : '—' }}</td>
+                        <td class="text-center">
                             <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
                                 {{ user.isActive ? 'Actif' : 'Inactif' }}
                             </span>
                         </td>
-                        <td class="text-end align-middle text-center">
+                        <td class="text-end">
                             <a href="{{ path('gestion_equipe_user_management_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                             <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
                             <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
@@ -79,8 +83,37 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="navigation mt-4">
-            {{ knp_pagination_render(users, 'pagination/bootstrap5.html.twig') }}
+        <div class="d-flex justify-content-end mt-4">
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        if ($('#userTable tbody tr').length > 0) {
+            $(document).ready(function () {
+                var table = $('#userTable').DataTable({
+                    paging: true,
+                    ordering: true,
+                    info: false,
+                    columnDefs: [
+                        { orderable: false, targets: -1 }
+                    ],
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+                    },
+                    dom: 'ft<"d-flex justify-content-end mt-4"p>',
+                    initComplete: function () {
+                        $('#userTable_filter').prependTo('#datatable-controls');
+                        $('#userTable_filter').addClass('d-flex align-items-center mb-0 text-black').css('margin-top', '-20px', 'width: 50px');
+                        $('#userTable_filter input').addClass('form-control form-control-sm me-2 text-black').css('max-width', '150px').css('border', '1px solid black');
+                        $('#userTable_filter label').addClass('mb-0 text-black');
+                    }
+                });
+            });
+        }
+    </script>
 {% endblock %}
