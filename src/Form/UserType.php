@@ -21,7 +21,6 @@ class UserType extends AbstractType
         $builder
             ->add('isActive', CheckboxType::class, [
                 'label' => 'Activer le compte',
-                'required' => false,
                 'help' => 'Cochez pour autoriser l\'utilisateur à se connecter à l\'application.',
                 'attr' => ['class' => 'form-check-input'],
             ])
