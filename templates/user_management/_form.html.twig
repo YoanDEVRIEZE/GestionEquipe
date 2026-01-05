@@ -2,9 +2,9 @@
     <div class="row g-3">
         <div class="col-md-6 d-flex align-items-center">
             <div class="form-check mt-4">
-                {{ form_widget(form.isActive, { attr: { class: 'form-check-input' } }) }}
+                {{ form_widget(form.isActive) }}
                 {{ form_label(form.isActive, null, { label_attr: { class: 'form-check-label text-black' } }) }}
-                {{ form_errors(form.isActive) }}
+                <b style="color: red;">{{ form_errors(form.isActive) }}</b>
                 <small class="form-text text-muted d-block mt-1">
                     Cocher pour autoriser l'utilisateur à se connecter à l'application
                 </small>
@@ -15,12 +15,12 @@
             <div class="d-flex flex-wrap gap-3">
                 {% for choice in form.roles %}
                     <div class="form-check d-flex align-items-center">
-                        {{ form_widget(choice, { attr: { class: 'form-check-input' } }) }}
+                        {{ form_widget(choice) }}
                         {{ form_label(choice, null, { label_attr: { class: 'form-check-label text-black ms-1 mb-0' } }) }}
                     </div>
                 {% endfor %}
             </div>
-            {{ form_errors(form.roles) }}
+            <b style="color: red;">{{ form_errors(form.roles) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Sélectionner un ou plusieurs postes occupés par l'utilisateur
             </small>
@@ -28,80 +28,80 @@
         <hr>
         <div class="col-md-6">
             {{ form_label(form.email) }}
-            {{ form_widget(form.email, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+            <b style="color: red;">{{ form_errors(form.email) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 L'adresse email professionnelle de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.emailPrivate) }}
-            {{ form_widget(form.emailPrivate, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.emailPrivate) }}
+            {{ form_widget(form.emailPrivate) }}
+            <b style="color: red;">{{ form_errors(form.emailPrivate) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 L'adresse email personnelle de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.lastName) }}
-            {{ form_widget(form.lastName, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+            <b style="color: red;">{{ form_errors(form.lastName) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Le nom de famille de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.firstName) }}
-            {{ form_widget(form.firstName, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.firstName) }}
+            {{ form_widget(form.firstName) }}
+            <b style="color: red;">{{ form_errors(form.firstName) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Le prénom de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.phonePro) }}
-            {{ form_widget(form.phonePro, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.phonePro) }}
+            {{ form_widget(form.phonePro) }}
+            <b style="color: red;">{{ form_errors(form.phonePro) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Le numéro de téléphone professionnel de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.phone) }}
-            {{ form_widget(form.phone, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.phone) }}
+            {{ form_widget(form.phone) }}
+            <b style="color: red;">{{ form_errors(form.phone) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Le numéro de téléphone personnel de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.companyId) }}
-            {{ form_widget(form.companyId, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.companyId) }}
+            {{ form_widget(form.companyId) }}
+            <b style="color: red;">{{ form_errors(form.companyId) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 L'identifiant interne de l'utilisateur dans l'entreprise.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.adress) }}
-            {{ form_widget(form.adress, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.adress) }}
+            {{ form_widget(form.adress) }}
+            <b style="color: red;">{{ form_errors(form.adress) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 L'adresse postale complète de l'utilisateur.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.department) }}
-            {{ form_widget(form.department, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.department) }}
+            {{ form_widget(form.department) }}
+            <b style="color: red;">{{ form_errors(form.department) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 Le service auquel l'utilisateur appartient.
             </small>
         </div>
         <div class="col-md-6">
             {{ form_label(form.avatar) }}
-            {{ form_widget(form.avatar, { attr: { class: 'form-control' } }) }}
-            {{ form_errors(form.avatar) }}
+            {{ form_widget(form.avatar) }}
+            <b style="color: red;">{{ form_errors(form.avatar) }}</b>
             <small class="form-text text-muted d-block mt-1 mb-4">
                 Sélectionner la photo de profil de l'utilisateur.
             </small>

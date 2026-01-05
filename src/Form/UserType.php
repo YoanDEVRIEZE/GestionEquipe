@@ -28,6 +28,7 @@ class UserType extends AbstractType
                 'label' => 'Activé le compte',
                 'required' => false,
                 'help' => 'Autorisera l\'utilisateur à se connecter à l\'application.',
+                'attr' => ['class' => 'form-check-input'],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email professionnel',
@@ -111,6 +112,7 @@ class UserType extends AbstractType
                 'choice_label' => fn (RolesEnum $choice) => $choice->label(),
                 'choice_value' => fn ($choice) =>
                     $choice instanceof RolesEnum ? $choice->value : $choice,
+                'attr' => ['class' => 'form-check-input'],
                 'help' => 'Les postes occupés par l\'utilisateur.',
             ])
             ->add('department', EntityType::class, [

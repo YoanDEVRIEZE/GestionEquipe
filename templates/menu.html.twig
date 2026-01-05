@@ -104,7 +104,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link color-green text-white d-flex align-items-center gap-2 {{ 
+            <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
             app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
             href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
                 <i class="bi bi-diagram-3"></i>
@@ -205,7 +205,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link color-green text-white {{ 
+                <a class="nav-link color-red text-white {{ 
                 app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
                 href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
                     <i class="bi bi-diagram-3 me-2"></i> Services

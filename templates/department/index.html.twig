@@ -21,11 +21,12 @@
         <a href="{{ path('gestion_equipe_department_new') }}" class="btn btn-primary">➕ Créer un service</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover mb-0">
+        <table class="table table-bordered table-striped table-hover table-sm mb-0">
             <thead class="table-light">
                 <tr>
                     <th class="align-middle" style="max-width: 120px;">Nom</th>
-                    <th class="align-middle" style="max-width: 120px;">Nombre d'utilisateurs</th>
+                    <th class="align-middle" style="max-width: 120px;">Description</th>
+                    <th class="text-center align-middle" style="max-width: 120px;">Nombre d'utilisateurs</th>
                     <th class="text-center align-middle" style="max-width: 120px;">Actions</th>
                 </tr>
             </thead>
@@ -33,7 +34,8 @@
             {% for departments in department %}
                 <tr>
                     <td class="align-middle" style="max-width: 120px;">{{ departments.name }}</td>
-                    <td class="align-middle" style="max-width: 120px;">{{ countUsersPerDepartment[departments.id] }}</td>
+                    <td class="align-middle text-truncate" style="max-width: 120px;">{{ departments.description }}</td>
+                    <td class="text-center align-middle" style="max-width: 120px;">{{ countUsersPerDepartment[departments.id] }}</td>
                     <td class="text-center align-middle" style="max-width: 120px;">
                         <a href="{{ path('gestion_equipe_department_show', {'id': departments.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_department_edit', {'id': departments.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>

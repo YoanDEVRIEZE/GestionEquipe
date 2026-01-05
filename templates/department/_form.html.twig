@@ -1,11 +1,21 @@
 <div class="container-fluid">
     <div class="row g-3">
-        <div class="col-md-6 d-flex align-items-center">
-            <div class="mt-4">
-                {{ form_label(form.name, null, { label_attr: { class: 'form-check-label' } }) }}
-                {{ form_widget(form.name, { attr: { class: 'form-control' } }) }}
-                {{ form_errors(form.name) }}
-            </div>
+        <div class="col-md-6">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            <b style="color: red;">{{ form_errors(form.name) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                Le nom du service.
+            </small>
+        </div>
+
+        <div class="col-md-6">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+            <b style="color: red;">{{ form_errors(form.description) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                La description du service.
+            </small>
         </div>
     </div>
 </div>
