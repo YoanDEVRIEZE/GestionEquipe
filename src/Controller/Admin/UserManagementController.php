@@ -61,8 +61,8 @@ final class UserManagementController extends AbstractController
             $firstname = ucfirst(strtolower($user->getFirstName()));
             $user->setFirstName($firstname);
 
-            $adress = strtoupper($user->getAdress());
-            $user->setAdress($adress);
+            $adress = strtoupper($user->getAddress());
+            $user->setAddress($adress);
 
             $mailPro = strtolower($user->getEmail());
             $user->setEmail($mailPro);
@@ -108,8 +108,8 @@ final class UserManagementController extends AbstractController
             $firstname = ucfirst(strtolower($user->getFirstName()));
             $user->setFirstName($firstname);
 
-            $adress = strtoupper($user->getAdress());
-            $user->setAdress($adress);
+            $adress = strtoupper($user->getAddress());
+            $user->setAddress($adress);
 
             $mailPro = strtolower($user->getEmail());
             $user->setEmail($mailPro);

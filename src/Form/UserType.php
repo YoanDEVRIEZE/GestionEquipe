@@ -23,6 +23,7 @@ class UserType extends AbstractType
                 'label' => 'Activer le compte',
                 'help' => 'Cochez pour autoriser l\'utilisateur à se connecter à l\'application.',
                 'attr' => ['class' => 'form-check-input'],
+                'required' => false,
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email professionnel <sup style="color: red">*</sup>',
@@ -32,6 +33,7 @@ class UserType extends AbstractType
                     'placeholder' => 'utilisateur@entreprise.com',
                 ],
                 'help' => 'L\'email professionnel sera utilisé comme identifiant de connexion.',
+                'required' => true,
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom <sup style="color: red">*</sup>',
@@ -41,6 +43,7 @@ class UserType extends AbstractType
                     'placeholder' => 'Jean',
                 ],
                 'help' => 'Le prénom de l\'utilisateur (50 caractères maximum).',
+                'required' => true,
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom <sup style="color: red">*</sup>',
@@ -50,6 +53,7 @@ class UserType extends AbstractType
                     'placeholder' => 'Dupont',
                 ],
                 'help' => 'Le nom de l\'utilisateur (50 caractères maximum).',
+                'required' => true,
             ])
             ->add('emailPrivate', EmailType::class, [
                 'label' => 'Email personnel',
@@ -58,6 +62,7 @@ class UserType extends AbstractType
                     'placeholder' => 'utilisateur@gmail.com',
                 ],
                 'help' => 'L\'email personnel peut être utilisé pour la récupération du mot de passe.',
+                'required' => false,
             ])
             ->add('phone', TextType::class, [
                 'label' => 'Téléphone personnel',
@@ -66,6 +71,7 @@ class UserType extends AbstractType
                     'placeholder' => '0700000000',
                 ],
                 'help' => 'Le numéro de téléphone personnel de l\'utilisateur.',
+                'required' => false,
             ])
             ->add('phonePro', TextType::class, [
                 'label' => 'Téléphone professionnel',
@@ -74,11 +80,14 @@ class UserType extends AbstractType
                     'placeholder' => '0320000000',
                 ],
                 'help' => 'Le numéro de téléphone professionnel de l\'utilisateur.',
+                'required' => false,
             ])
             ->add('companyId', TextType::class, [
-                'label' => 'Identifiant entreprise',
+                'label' => 'Identifiant entreprise <sup style="color: red">*</sup>',
+                'label_html' => true,
                 'attr' => ['class' => 'form-control'],
                 'help' => 'Identifiant interne de l\'utilisateur dans l\'entreprise (50 caractères maximum).',
+                'required' => true,
             ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
@@ -87,6 +96,7 @@ class UserType extends AbstractType
                     'placeholder' => '10 RUE DE PARIS 75000 PARIS',
                 ],
                 'help' => 'Adresse postale de l\'utilisateur (255 caractères maximum, facultatif).',
+                'required' => false,
             ])
             ->add('roles', EnumType::class, [
                 'class' => RolesEnum::class,
@@ -104,6 +114,7 @@ class UserType extends AbstractType
                     $choice instanceof RolesEnum ? $choice->value : $choice,
                 'attr' => ['class' => 'form-check-input'],
                 'help' => 'Sélectionnez le(s) poste(s) occupé(s) par l\'utilisateur (1 minimum).',
+                'required' => true,
             ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
@@ -115,11 +126,13 @@ class UserType extends AbstractType
                     'class' => 'form-select',
                 ],
                 'help' => 'Le service auquel l\'utilisateur appartient.',
+                'required' => true,
             ])
             ->add('avatar', TextType::class, [
                 'label' => 'Photo de profil',
                 'attr' => ['class' => 'form-control'],
                 'help' => 'Sélectionnez la photo de profil de l\'utilisateur.',
+                'required' => false,
             ]);
     }
 

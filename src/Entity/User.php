@@ -8,10 +8,13 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['companyId'], message: 'Cet identifiant d\'entreprise est déjà utilisé.')]
+#[UniqueEntity(fields: ['email'], message: 'Cet email d’entreprise est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,17 +22,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    #[Assert\Length(max : 180, message : '180 caractères maximum')]
-    #[Assert\NotBlank(message : 'L\'adresse mail professionnelle est obligatoire')]
-    #[Assert\Email(message : 'Veuillez saisir une adresse mail')]
+    #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Length(max : 180, maxMessage : '180 caractères maximum.')]
+    #[Assert\NotBlank(message : 'L\'adresse mail professionnelle est obligatoire.')]
+    #[Assert\Email(message : 'Veuillez saisir une adresse mail.')]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column(enumType: RolesEnum::class)]
-    #[Assert\Count(min : 1, minMessage : 'Veuillez selectionner un poste minimum')]
+    #[Assert\Count(min : 1, minMessage : 'Veuillez selectionner un poste minimum.')]
     private array $roles = [];
 
     /**
@@ -39,47 +42,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\Length(max : 50, message : '50 caractères maximum')]
-    #[Assert\NotBlank(message : 'Le prénom est obligatoire')]
+    #[Assert\Length(max : 50, maxMessage : '50 caractères maximum.')]
+    #[Assert\NotBlank(message : 'Le prénom est obligatoire.')]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\Length(max : 50, message : '50 caractères maximum')]
-    #[Assert\NotBlank(message : 'Le nom est obligatoire')]
+    #[Assert\Length(max : 50, maxMessage : '50 caractères maximum.')]
+    #[Assert\NotBlank(message : 'Le nom est obligatoire.')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 180, nullable: true)]
-    #[Assert\Length(max : 180, message : '180 caractères maximum')]
-    #[Assert\Email(message : 'Veuillez saisir une adresse mail')]
+    #[Assert\Length(max : 180, maxMessage : '180 caractères maximum.')]
+    #[Assert\Email(message : 'Veuillez saisir une adresse mail.')]
     private ?string $emailPrivate = null;
 
     #[ORM\Column(length: 20, nullable: true)]
-    #[Assert\Length(max: 20, maxMessage: '20 caractères maximum')]
-    #[Assert\Regex(pattern: '/^\+?[0-9\s\-\(\)]+$/', message: 'Le numéro de téléphone doit être un numéro valide')]
+    #[Assert\Length(max: 20, maxMessage: '20 caractères maximum.')]
+    #[Assert\Regex(pattern: '/^\+?[0-9\s\-\(\)]*$/', message: 'Le numéro de téléphone doit être un numéro valide.')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: '20 caractères maximum')]
-    #[Assert\Regex(pattern: '/^\+?[0-9\s\-\(\)]+$/', message: 'Le numéro de téléphone doit être un numéro valide')]
+    #[Assert\Regex(pattern: '/^\+?[0-9\s\-\(\)]*$/', message: 'Le numéro de téléphone doit être un numéro valide.')]
     private ?string $phonePro = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Assert\Length(max: 50, maxMessage: '50 caractères maximum')]
+    #[ORM\Column(length: 50, unique: true)]
+    #[Assert\Length(max: 50, maxMessage: '50 caractères maximum.')]
+    #[Assert\NotBlank(message : 'L\'identifiant d\'entreprise est obligatoire.')]
     private ?string $companyId = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(max: 255, maxMessage: '255 caractères maximum')]
+    #[Assert\Length(max: 255, maxMessage: '255 caractères maximum.')]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(max: 255, maxMessage: '255 caractères maximum')]
+    #[Assert\Length(max: 255, maxMessage: '255 caractères maximum.')]
     private ?string $avatar = null;
 
     #[ORM\Column]
     private ?bool $isActive = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[Assert\NotNull(message : 'Veuillez selectionner un service')]
+    #[Assert\NotNull(message : 'Veuillez selectionner un service.')]
     private ?Department $department = null;
 
     public function getId(): ?int
