@@ -20,40 +20,49 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover mb-0">
+        <table class="table table-bordered table-striped table-hover table-sm mb-0">
             <thead class="table-light">
                 <tr>
-                    <th>Identifiant</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Téléphone</th>
-                    <th>Poste occupé</th>
-                    <th>Service</th>
-                    <th>Etat du compte</th>
-                    <th class="text-end">Actions</th>
+                    <th class="align-middle">Identifiant</th>
+                    <th class="d-none d-md-table-cell align-middle">Nom</th>
+                    <th class="d-none d-md-table-cell align-middle">Prénom</th>
+                    <th class="d-none d-md-table-cell align-middle">Email</th>
+                    <th class="d-none d-md-table-cell align-middle">Téléphone</th>
+                    <th class="d-none d-md-table-cell align-middle">Poste occupé</th>
+                    <th class="d-none d-md-table-cell align-middle">Service</th>
+                    <th class="align-middle text-center">Etat du compte</th>
+                    <th class="text-end align-middle text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td>{{ user.companyId }}</td>
-                        <td>{{ user.lastName }}</td>
-                        <td>{{ user.firstName }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phonePro }}</td>
-                        <td>
-                            {% for roles in user.roles %}
-                                {{ roles }}
+                        <td class="text-truncate align-middle">{{ user.companyId ? user.companyId : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.lastName ? user.lastName : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.firstName ? user.firstName : '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
+                        <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
+                        <td class="d-none d-md-table-cell align-middle">
+                            {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
+                            {% for role in rolesOrder %}
+                                {% if role in user.roles %}
+                                    {% if role == 'ROLE_USER' %}
+                                        <span class="badge bg-primary">Utilisateur</span>
+                                    {% elseif role == 'ROLE_MANAGER' %}
+                                        <span class="badge bg-warning">Manager</span>
+                                    {% elseif role == 'ROLE_ADMIN' %}
+                                        <span class="badge bg-danger">Administrateur</span>
+                                    {% endif %}
+                                {% endif %}
                             {% endfor %}
                         </td>
-                        <td>{{ user.department ? user.department.name : '-' }}</td>
-                        <td>
+                        <td class="d-none d-md-table-cell align-middle">{{ user.department ? user.department.name : '—' }}</td>
+                        <td class="align-middle text-center">
                             <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
                                 {{ user.isActive ? 'Actif' : 'Inactif' }}
                             </span>
                         </td>
-                        <td class="text-end">
+                        <td class="text-end align-middle text-center">
                             <a href="{{ path('gestion_equipe_user_management_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                             <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
                             <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">

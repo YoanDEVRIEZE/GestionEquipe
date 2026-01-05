@@ -44,15 +44,16 @@
                         <td class="d-none d-md-table-cell text-truncate align-middle" style="max-width: 120px;">{{ user.email ? user.email : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">{{ user.phonePro ? user.phonePro : '—' }}</td>
                         <td class="d-none d-md-table-cell align-middle">
-                            {% for role in user.roles %}
-                                {% if role == "ROLE_USER" %}
-                                    <span class="badge bg-primary">Utilisateur</span>
-                                {% endif %}
-                                {% if role == "ROLE_MANAGER" %}
-                                    <span class="badge bg-warning">Manager</span>
-                                {% endif %}
-                                {% if role == 'ROLE_ADMIN' %}
-                                    <span class="badge bg-danger">Administrateur</span>
+                            {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
+                            {% for role in rolesOrder %}
+                                {% if role in user.roles %}
+                                    {% if role == 'ROLE_USER' %}
+                                        <span class="badge bg-primary">Utilisateur</span>
+                                    {% elseif role == 'ROLE_MANAGER' %}
+                                        <span class="badge bg-warning">Manager</span>
+                                    {% elseif role == 'ROLE_ADMIN' %}
+                                        <span class="badge bg-danger">Administrateur</span>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                         </td>
@@ -78,7 +79,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
         <div class="navigation mt-4">
             {{ knp_pagination_render(users, 'pagination/bootstrap5.html.twig') }}
         </div>

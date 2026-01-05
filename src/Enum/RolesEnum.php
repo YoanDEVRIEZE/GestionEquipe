@@ -4,9 +4,9 @@ namespace App\Enum;
 
 enum RolesEnum: string
 {
-    case ROLE_ADMIN = 'ROLE_USER';
+    case ROLE_USER = 'ROLE_USER';
     case ROLE_MANAGER = 'ROLE_MANAGER';
-    case ROLE_USER = 'ROLE_ADMIN';
+    case ROLE_ADMIN = 'ROLE_ADMIN';
 
     public function label(): string
     {

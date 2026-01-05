@@ -27,71 +27,76 @@ class UserType extends AbstractType
             ->add('isActive', CheckboxType::class, [
                 'label' => 'Activé le compte',
                 'required' => false,
+                'help' => 'Autorisera l\'utilisateur à se connecter à l\'application.',
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email professionnel',
-                'attr' => ['class' => 'form-control'],
-                'required' => true,
-            ]);
-
-        if (!$options['edit']) {
-            $builder->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'attr' => ['class' => 'form-control'],
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(message: 'Veuillez saisir un mot de passe.'),
-                    new Length(
-                        min: 8,
-                        max: 4096,
-                        minMessage: 'Votre mot de passe doit comporter au moins {{ limit }} caractères.'
-                    ),
-                    new Regex(
-                        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
-                        message: 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.'
-                    ),
-                    new NotCompromisedPassword(
-                        message: 'Ce mot de passe a été compromis lors d’une fuite de données. Veuillez en choisir un autre.'
-                    ),
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'utilisateur@entreprise.com',
                 ],
-            ]);
-        }
-
-        $builder
+                'required' => true,
+                'help' => 'L\'email professionnel sera utilisé comme identifiant de connexion.',
+            ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Jean',
+                ],
                 'required' => true,
+                'help' => 'Le prénom de l\'utilisateur.',
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Dupont',
+                ],
                 'required' => true,
+                'help' => 'Le nom de famille de l\'utilisateur.',
             ])
             ->add('emailPrivate', EmailType::class, [
                 'label' => 'Email personnel',
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'utilisateur@gmail.com',
+                ],
                 'required' => false,
+                'help' => 'L\'email personnel peut être utilisé pour la récupération de mot de passe.',
             ])
             ->add('phone', TextType::class, [
-                'label' => 'Téléphone',
-                'attr' => ['class' => 'form-control'],
+                'label' => 'Téléphone personnel',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => '0700000000',
+                ],
                 'required' => false,
+                'help' => 'Le numéro de téléphone personnel de l\'utilisateur.',
             ])
             ->add('phonePro', TextType::class, [
-                'label' => 'Téléphone pro',
-                'attr' => ['class' => 'form-control'],
+                'label' => 'Téléphone professionnel',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => '0320000000',
+                ],
                 'required' => false,
+                'help' => 'Le numéro de téléphone professionnel de l\'utilisateur.',
             ])
             ->add('companyId', TextType::class, [
-                'label' => 'ID entreprise',
+                'label' => 'Identifiant entreprise',
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
+                'help' => 'Identifiant interne de l\'utilisateur dans l\'entreprise.',
             ])
             ->add('adress', TextType::class, [
                 'label' => 'Adresse',
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => '10 RUE DE PARIS 75000 PARIS',
+                ],
                 'required' => false,
+                'help' => 'L\'adresse postale de l\'utilisateur.',
             ])
             ->add('roles', EnumType::class, [
                 'class' => RolesEnum::class,
@@ -106,6 +111,7 @@ class UserType extends AbstractType
                 'choice_label' => fn (RolesEnum $choice) => $choice->label(),
                 'choice_value' => fn ($choice) =>
                     $choice instanceof RolesEnum ? $choice->value : $choice,
+                'help' => 'Les postes occupés par l\'utilisateur.',
             ])
             ->add('department', EntityType::class, [
                 'class' => Department::class,
@@ -116,11 +122,13 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-select',
                 ],
+                'help' => 'Le service auquel l\'utilisateur appartient.',
             ])
             ->add('avatar', TextType::class, [
                 'label' => 'Photo de profil ',
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
+                'help' => 'Selectionner votre photo de profil de l\'utilisateur.',
             ]);
     }
 
