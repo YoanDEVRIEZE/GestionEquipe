@@ -25,6 +25,8 @@ security:
                 default_target_path: gestion_equipe_home
                 enable_csrf: true
                 csrf_token_id: authenticate
+            user_checker: App\Security\UserActiveChecker
+
             logout:
                 path: gestion_equipe_logout
                 # where to redirect after logout
