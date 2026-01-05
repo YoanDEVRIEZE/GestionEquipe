@@ -22,6 +22,7 @@ class DepartmentType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le nom du service',
                 ],
+                'required' => true,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du service',
@@ -31,6 +32,7 @@ class DepartmentType extends AbstractType
                     'placeholder' => 'Entrez une description pour le service',
                     'rows' => 6,
                 ],
+                'required' => false,
             ]);
     }
 

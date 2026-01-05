@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: DepartmentRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Ce service existe déjà.')]
 class Department
 {
     #[ORM\Id]
@@ -17,8 +19,8 @@ class Department
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\Length(max : 100, message : '100 caractères maximum')]
+    #[ORM\Column(length: 100, unique : true)]
+    #[Assert\Length(max : 100, maxMessage : '100 caractères maximum')]
     #[Assert\NotBlank(message: 'Le nom du service est obligatoire')]
     private ?string $name = null;
 
@@ -29,7 +31,7 @@ class Department
     private Collection $users;
 
     #[ORM\Column(type: Types::TEXT, nullable: true, length: 500)]
-    #[Assert\Length(max : 500, message : '500 caractères maximum')]
+    #[Assert\Length(max : 500, maxMessage : '500 caractères maximum')]
     private ?string $description = null;
 
     public function __construct()
