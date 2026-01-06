@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord User{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-4">
+        <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
+    </h1>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">DMT</h6>
+                    <h3>04:30</h3>
+                    <small class="text-muted mb-2">DMT annuelle</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">DMA</h6>
+                    <h3>00:30</h3>
+                    <small class="text-muted mb-2">DMA annuelle</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Tx de retrait</h6>
+                    <h3>12,75%</h3>
+                    <small class="text-muted mb-2">Tx de retrait annuel</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h6 class="card-title">Pause</h6>
+                    <h3>8,4%</h3>
+                    <small class="text-muted mb-2">Pause annuelle</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">Statistiques mensuelle</div>
+                <div class="card-body">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">Répartition</div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4 card">
+        <div class="card-header">Dernières opérations</div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Utilisateur</th>
+                        <th>Action</th>
+                        <th class="text-end">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12/09/2025</td>
+                        <td>Yoan</td>
+                        <td>Achat</td>
+                        <td class="text-end">120 €</td>
+                    </tr>
+                    <tr>
+                        <td>11/09/2025</td>
+                        <td>Admin</td>
+                        <td>Abonnement</td>
+                        <td class="text-end">49 €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const bar = document.getElementById('barChart');
+
+    if (bar) {
+        const labels = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+        const dmtDataMS = ['04:30', '00:30', '00:15', '00:25', '00:45', '00:35', '00:25', '00:35', '01:15', '01:25', '01:45', '01:35'];
+        const dmaDataMS = ['02:15', '01:30', '00:45', '01:00', '01:15', '00:50', '01:05', '00:55', '01:10', '01:20', '01:30', '01:25'];
+        const txRetraitData = [15, 14, 13, 16, 12, 14, 15, 13, 16, 15, 14, 13];
+        const pauseData = [8, 7.5, 8.2, 8.1, 8.3, 8.0, 8.4, 8.2, 8.5, 8.3, 8.1, 8.4];
+
+        function convertToSeconds(arr) {
+            return arr.map(d => {
+                const [m,s] = d.split(':').map(Number);
+                return m*60 + s;
+            });
+        }
+
+        function secondsToMMSS(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2,'0');
+            const s = (seconds % 60).toString().padStart(2,'0');
+            return `${m}:${s}`;
+        }
+
+        const dmtData = convertToSeconds(dmtDataMS);
+        const dmaData = convertToSeconds(dmaDataMS);
+
+        new Chart(bar, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'DMT (mm:ss)',
+                        data: dmtData,
+                        backgroundColor: 'rgba(54,162,235,0.7)',
+                        yAxisID: 'yTime'
+                    },
+                    {
+                        label: 'DMA (mm:ss)',
+                        data: dmaData,
+                        backgroundColor: 'rgba(255,99,132,0.7)',
+                        yAxisID: 'yTime'
+                    },
+                    {
+                        label: 'Tx de retrait (%)',
+                        data: txRetraitData,
+                        backgroundColor: 'rgba(255,206,86,0.7)',
+                        yAxisID: 'yPercent'
+                    },
+                    {
+                        label: 'Pause (%)',
+                        data: pauseData,
+                        backgroundColor: 'rgba(75,192,192,0.7)',
+                        yAxisID: 'yPercent'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw;
+                                if(context.dataset.yAxisID === 'yTime'){
+                                    return context.dataset.label + ': ' + secondsToMMSS(value);
+                                } else {
+                                    return context.dataset.label + ': ' + value + '%';
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    yTime: {
+                        type: 'linear',
+                        position: 'left',
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return secondsToMMSS(value);
+                            }
+                        },
+                        title: { display: true, text: 'Temps (MM:SS)' }
+                    },
+                    yPercent: {
+                        type: 'linear',
+                        position: 'right',
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'Taux (%)' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

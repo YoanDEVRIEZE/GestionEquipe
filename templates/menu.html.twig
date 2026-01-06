@@ -2,7 +2,7 @@
     <i class="bi bi-list"></i>
 </button>
 <nav id="sidebar" class="position-fixed top-0 start-0 vh-100 p-3 d-none d-md-flex flex-column">
-    <a href="{{ path('gestion_equipe_home') }}">
+    <a href="{{ path(tdb) }}">
         <div class="sidebar-header d-flex flex-column align-items-center mb-4">
             <img src="{{ asset('images/logo.png') }}" alt="Gestion Équipe" title="Gestion Équipe"
                 class="mb-2 sidebar-logo">
@@ -16,8 +16,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
-                app.request.attributes.get('_route') == 'gestion_equipe_home' ? 'active' : '' }}"
-                href="{{ path('gestion_equipe_home') }}" title="Tableau de bord collaborateur">
+                app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
+                href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
                     <i class="bi bi-speedometer2"></i>
                     <span class="menu-text">Tableau de bord</span>
                 </a>
@@ -56,8 +56,9 @@
                 <b>Manager</b>
             </li>
             <li class="nav-item">
-                <a class="nav-link color-yellow text-white d-flex align-items-center gap-2" 
-                href="#" title="Tableau de bord manager">
+                <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+                app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
+                href="{{ path(tdb) }}" title="Tableau de bord manager">
                     <i class="bi bi-speedometer"></i>
                     <span class="menu-text">Tableau de bord</span>
                 </a>
@@ -94,6 +95,14 @@
         {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
                 <b>Administrateur</b>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+                app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
+                href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
+                    <i class="bi bi-speedometer"></i>
+                    <span class="menu-text">Tableau de bord</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
@@ -136,8 +145,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link color-yellow text-white {{ 
-                    app.request.attributes.get('_route') == 'gestion_equipe_home' ? 'active' : '' }}"
-                    href="{{ path('gestion_equipe_home') }}" title="Tableau de bord collaborateur">
+                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
+                    href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
                         <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -171,8 +180,9 @@
                     <b>Manager</b>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link color-yellow text-white" 
-                    href="#" title="Tableau de bord manager">
+                    <a class="nav-link color-yellow text-white {{ 
+                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
+                    href="{{ path(tdb) }}" title="Tableau de bord manager">
                         <i class="bi bi-speedometer me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -204,6 +214,13 @@
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item mt-2 mb-1 text-white text-uppercase small">
                     <b>Administrateur</b>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link color-yellow text-white {{ 
+                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
+                    href="{{ path(tdb) }}" title="Tableau de bord manager">
+                        <i class="bi bi-speedometer me-2"></i> Tableau de bord
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link color-yellow text-white {{ 

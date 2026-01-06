@@ -16,7 +16,15 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($this->getUser()) {
-            return $this->redirectToRoute('gestion_equipe_home');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('gestion_equipe_adminhome');
+            }
+
+            if ($this->isGranted('ROLE_MANAGER')) {
+                return $this->redirectToRoute('gestion_equipe_managerhome');
+            }
+
+            return $this->redirectToRoute('gestion_equipe_userhome');
         }
 
         return $this->render('security/login.html.twig', [

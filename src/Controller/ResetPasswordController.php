@@ -33,7 +33,15 @@ class ResetPasswordController extends AbstractController
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('gestion_equipe_home');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('gestion_equipe_adminhome');
+            }
+
+            if ($this->isGranted('ROLE_MANAGER')) {
+                return $this->redirectToRoute('gestion_equipe_managerhome');
+            }
+
+            return $this->redirectToRoute('gestion_equipe_userhome');
         }
 
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -55,7 +63,15 @@ class ResetPasswordController extends AbstractController
     public function checkEmail(): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('gestion_equipe_home');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('gestion_equipe_adminhome');
+            }
+
+            if ($this->isGranted('ROLE_MANAGER')) {
+                return $this->redirectToRoute('gestion_equipe_managerhome');
+            }
+
+            return $this->redirectToRoute('gestion_equipe_userhome');
         }
 
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
@@ -71,7 +87,15 @@ class ResetPasswordController extends AbstractController
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, ?string $token = null): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('gestion_equipe_home');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('gestion_equipe_adminhome');
+            }
+
+            if ($this->isGranted('ROLE_MANAGER')) {
+                return $this->redirectToRoute('gestion_equipe_managerhome');
+            }
+
+            return $this->redirectToRoute('gestion_equipe_userhome');
         }
 
         if ($token) {

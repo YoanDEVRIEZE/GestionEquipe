@@ -22,7 +22,6 @@ security:
             form_login:
                 login_path: gestion_equipe_login
                 check_path: gestion_equipe_login
-                default_target_path: gestion_equipe_home
                 enable_csrf: true
                 csrf_token_id: authenticate
             user_checker: App\Security\UserActiveChecker
@@ -40,7 +39,8 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        - { path: ^/Accueil, roles: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] }
+        - { path: ^/Accueil/Utilisateur, roles: ROLE_USER }
+        - { path: ^/Accueil/Manager, roles: ROLE_MANAGER }
         - { path: ^/Accueil/Admin, roles: ROLE_ADMIN }
 
 when@test:
