@@ -44,7 +44,7 @@ final class DepartmentController extends AbstractController
             $entityManager->persist($department);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : Le service <b>'. $department->getName() .'</b> a été créé avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été créé avec succès.');
 
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,7 +76,7 @@ final class DepartmentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : Le service <b>'. $department->getName() .'</b> a été modifié avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été modifié avec succès.');
 
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -94,7 +94,7 @@ final class DepartmentController extends AbstractController
             $entityManager->remove($department);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : Le service <b>'. $department->getName() .'</b> a été supprimé avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été supprimé avec succès.');
         }
 
         return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);

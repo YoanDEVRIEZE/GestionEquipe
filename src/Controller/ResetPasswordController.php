@@ -88,7 +88,7 @@ class ResetPasswordController extends AbstractController
         try {
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('reset_password_error', sprintf(
+            $this->addFlash('reset_password_error', '<b>Erreur</b> :'.sprintf(
                 '%s - %s',
                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_VALIDATE, [], 'ResetPasswordBundle'),
                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
@@ -107,7 +107,7 @@ class ResetPasswordController extends AbstractController
             $this->entityManager->flush();
             $this->cleanSessionAfterReset();
 
-            $this->addFlash('success', 'Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.');
+            $this->addFlash('success', '<b>Confirmation</b> : Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter.');
             return $this->redirectToRoute('gestion_equipe_login');
         }
 
@@ -129,7 +129,7 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            $this->addFlash('danger', sprintf(
+            $this->addFlash('danger', '<b>Erreur</b> :'.sprintf(
                 '%s - %s',
                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')

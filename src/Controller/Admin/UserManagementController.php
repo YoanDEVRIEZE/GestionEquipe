@@ -23,7 +23,7 @@ final class UserManagementController extends AbstractController
         $department = $departmentRepository->findAll();
 
         if ($department === []) {
-            $this->addFlash('error', 'Erreur : Aucun département / service n\'est défini. Veuillez créer des départements / services avant de gérer les utilisateurs.');
+            $this->addFlash('error', '<b>Erreur</b> : Aucun département / service n\'est défini. Veuillez créer des départements / services avant de gérer les utilisateurs.');
 
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         
@@ -73,7 +73,7 @@ final class UserManagementController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : nouvel utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ajouté avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : nouvel utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ajouté avec succès.');
 
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -119,7 +119,7 @@ final class UserManagementController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
 
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -134,14 +134,20 @@ final class UserManagementController extends AbstractController
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            if ($this->getUser() === $user) {
+                $this->addFlash('error', '<b>Erreur</b> : Vous ne pouvez pas supprimer votre propre compte.');
+
+                return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
+            }
+
             $entityManager->remove($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Confirmation : l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> supprimé avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> supprimé avec succès.');
         } else {
             $this->addFlash('error', 'Erreur : jeton CSRF invalide. La suppression de l\'utilisateur a échoué.');
         }
 
-        return $this->redirectToRoute('app_user_management_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
     }
 }
