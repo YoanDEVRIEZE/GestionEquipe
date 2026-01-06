@@ -92,25 +92,32 @@
         </li>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
-        <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
-            <b>Administrateur</b>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
-            app.request.attributes.get('_route') starts with 'gestion_equipe_user_management' ? 'active' : '' }}"
-                href="{{ path('gestion_equipe_user_management_index') }}" title="Utilisateurs administrateur">
-                <i class="bi bi-person-fill-gear"></i>
-                <span class="menu-text">Utilisateurs</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
-            app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
-            href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
-                <i class="bi bi-diagram-3"></i>
-                <span class="menu-text">Services</span>
-            </a>
-        </li>
+            <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
+                <b>Administrateur</b>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_user_management' ? 'active' : '' }}"
+                    href="{{ path('gestion_equipe_user_management_index') }}" title="Utilisateurs administrateur">
+                    <i class="bi bi-person-fill-gear"></i>
+                    <span class="menu-text">Utilisateurs</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
+                    <i class="bi bi-diagram-3"></i>
+                    <span class="menu-text">Services</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-green text-white {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_team' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_team_index') }}" title="Equipes administrateur">
+                    <i class="bi bi-person-vcard-fill me-2"></i> Equipes
+                </a>
+            </li>
         {% endif %}
     </ul>
 </nav>
@@ -209,6 +216,13 @@
                 app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
                 href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
                     <i class="bi bi-diagram-3 me-2"></i> Services
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link color-green text-white {{ 
+                app.request.attributes.get('_route') starts with 'gestion_equipe_team' ? 'active' : '' }}"
+                href="{{ path('gestion_equipe_team_index') }}" title="Equipes administrateur">
+                    <i class="bi bi-person-vcard-fill me-2"></i> Equipes
                 </a>
             </li>
             {% endif %}

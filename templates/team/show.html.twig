@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}L'équipe{% endblock %}
+
+{% block main_content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-1">
+            <i class="bi bi-person-vcard-fill me-2"></i> Liste des utilisateurs de l'équipe {{ team.name }}
+            <small class="text-muted d-block fs-6" style="max-width : 70%">
+                <i>{{ team.description }}</i>
+            </small>
+            <small class="text-muted d-block fs-6 mt-2">
+                <b>{{ countUsers }} utilisateur{{ countUsers > 1 ? 's' : '' }}</b>
+            </small>
+        </h1>
+    </div>
+    <div class="d-flex justify-content-end align-items-center mb-3" id="datatable-controls">
+        <a href="{{ path('gestion_equipe_team_index') }}" class="btn btn-outline-secondary me-2">← Retour à la liste</a>
+        <a href="{{ path('gestion_equipe_team_edit', {'id': team.id}) }}" class="btn btn-primary me-2">Modifier</a>
+        <form method="post" action="{{ path('gestion_equipe_department_delete', {'id': team.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer l\'équipe \'{{ team.name }}\' ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ team.id) }}">
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table id="dataTable" class="table table-bordered table-striped table-hover table-sm mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Identifiant</th>
+                    <th class="d-none d-md-table-cell">Nom</th>
+                    <th class="d-none d-md-table-cell">Prénom</th>
+                    <th class="d-none d-md-table-cell">Email</th>
+                    <th class="d-none d-md-table-cell">Téléphone</th>
+                    <th class="d-none d-md-table-cell">Poste occupé</th>
+                    <th class="d-none d-md-table-cell">Service</th>
+                    <th>État du compte</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td class="text-truncate">{{ user.companyId ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.lastName ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.firstName ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 120px;">{{ user.email ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell">{{ user.phonePro ?: '—' }}</td>
+                        <td class="d-none d-md-table-cell">
+                            {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
+                            {% for role in rolesOrder %}
+                                {% if role in user.roles %}
+                                    {% if role == 'ROLE_USER' %}
+                                        <span class="badge bg-primary">Utilisateur</span>
+                                    {% elseif role == 'ROLE_MANAGER' %}
+                                        <span class="badge bg-warning">Manager</span>
+                                    {% elseif role == 'ROLE_ADMIN' %}
+                                        <span class="badge bg-danger">Administrateur</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="d-none d-md-table-cell">{{ user.department ? user.department.name : '—' }}</td>
+                        <td class="text-center">
+                            <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
+                                {{ user.isActive ? 'Actif' : 'Inactif' }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ path('gestion_equipe_user_management_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                            <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
+                            <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/dataTable.js') }}"></script>
+{% endblock %}

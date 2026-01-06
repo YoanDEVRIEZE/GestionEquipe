@@ -2,37 +2,37 @@
 
 namespace App\Entity;
 
-use App\Repository\DepartmentRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: DepartmentRepository::class)]
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'Ce service existe déjà.')]
-class Department
+class Team
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100, unique: true)]
-    #[Assert\Length(max: 100, maxMessage: '100 caractères maximum.')]
-    #[Assert\NotBlank(message: 'Le nom du service est obligatoire.')]
+    #[ORM\Column(length: 100, unique : true)]
+    #[Assert\NotBlank(message : 'Le nom de l\'équipe est obligatoire.')]
+    #[Assert\Length(max : 100, maxMessage : '100 caractères maximum.')]
     private ?string $name = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true, length : 500)]
+    #[Assert\Length(max: 500, maxMessage: '500 caractères maximum.')]
+    private ?string $description = null;
 
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'department')]
+    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'team')]
     private Collection $users;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true, length: 500)]
-    #[Assert\Length(max : 500, maxMessage: '500 caractères maximum.')]
-    private ?string $description = null;
 
     public function __construct()
     {
@@ -56,6 +56,18 @@ class Department
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */
@@ -68,7 +80,7 @@ class Department
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setDepartment($this);
+            $user->setTeam($this);
         }
 
         return $this;
@@ -78,22 +90,10 @@ class Department
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getDepartment() === $this) {
-                $user->setDepartment(null);
+            if ($user->getTeam() === $this) {
+                $user->setTeam(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
 
         return $this;
     }

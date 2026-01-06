@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Department;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -126,6 +127,18 @@ class UserType extends AbstractType
                     'class' => 'form-select',
                 ],
                 'help' => 'Le service auquel l\'utilisateur appartient.',
+                'required' => true,
+            ])
+            ->add('team', EntityType::class, [
+                'class' => Team::class,
+                'choice_label' => 'name',
+                'label' => 'Equipe <sup style="color : red;">*</sup>',
+                'label_html' => true,
+                'placeholder' => 'Sélectionner une équipe',
+                'attr' => [
+                    'class' => 'form-select',
+                ],
+                'help' => 'L\'équipe à laquelle l\'utilisateur appartient.',
                 'required' => true,
             ])
             ->add('avatar', TextType::class, [

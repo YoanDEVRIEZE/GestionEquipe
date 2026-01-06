@@ -56,14 +56,12 @@ final class DepartmentController extends AbstractController
     }
 
     #[Route('/{id}/Consulter', name: 'gestion_equipe_department_show', methods: ['GET'])]
-    public function show(Department $department, UserRepository $userRepository): Response
+    public function show(Department $department): Response
     {
-        $countUsers = $department->getUsers()->count();
-
         return $this->render('department/show.html.twig', [
             'department' => $department,
-            'users' => $userRepository->findBy(['department' => $department]),
-            'countUsers' => $countUsers,
+            'users' => $department->getUsers(),
+            'countUsers' => $department->getUsers()->count(),
         ]);
     }
 
@@ -90,6 +88,12 @@ final class DepartmentController extends AbstractController
     #[Route('/{id}/Supprimer', name: 'gestion_equipe_department_delete', methods: ['POST'])]
     public function delete(Request $request, Department $department, EntityManagerInterface $entityManager): Response
     {
+        if ($department->getUsers()->isEmpty() === false) {
+            $this->addFlash('error', '<b>Erreur</b> : Veuillez dans un premier temps supprimer les utilisateurs liés à ce service.');
+
+            return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$department->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($department);
             $entityManager->flush();

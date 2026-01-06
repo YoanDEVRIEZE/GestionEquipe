@@ -99,6 +99,14 @@
             </small>
         </div>
         <div class="col-md-6">
+            {{ form_label(form.team) }}
+            {{ form_widget(form.team) }}
+            <b style="color: red;">{{ form_errors(form.team) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                {{ form_help(form.team) }}
+            </small>
+        </div>
+        <div class="col-md-6">
             {{ form_label(form.avatar) }}
             {{ form_widget(form.avatar) }}
             <b style="color: red;">{{ form_errors(form.avatar) }}</b>
