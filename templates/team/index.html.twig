@@ -29,8 +29,8 @@
             <thead class="table-light">
                 <tr>
                     <th>Nom</th>
-                    <th>Description</th>
-                    <th class="text-center">Nombre d'utilisateurs</th>
+                    <th class="d-none d-md-table-cell">Description</th>
+                    <th class="d-none d-md-table-cell text-center">Nombre d'utilisateurs</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -38,8 +38,8 @@
             {% for teams in team %}
                 <tr>
                     <td>{{ teams.name }}</td>
-                    <td class="text-truncate" style="max-width: 250px;">{{ teams.description }}</td>
-                    <td class="text-center">{{ countUsersPerTeam[teams.id] }}</td>
+                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 250px;">{{ teams.description }}</td>
+                    <td class="d-none d-md-table-cell text-center">{{ countUsersPerTeam[teams.id] }}</td>
                     <td class="text-center">
                         <a href="{{ path('gestion_equipe_team_show', {'id': teams.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_team_edit', {'id': teams.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>

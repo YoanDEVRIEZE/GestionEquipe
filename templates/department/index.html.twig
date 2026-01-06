@@ -29,8 +29,8 @@
             <thead class="table-light">
                 <tr>
                     <th>Nom</th>
-                    <th>Description</th>
-                    <th class="text-center">Nombre d'utilisateurs</th>
+                    <th class="d-none d-md-table-cell">Description</th>
+                    <th class="d-none d-md-table-cell text-center">Nombre d'utilisateurs</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -38,8 +38,8 @@
             {% for departments in department %}
                 <tr>
                     <td>{{ departments.name }}</td>
-                    <td class="text-truncate" style="max-width: 250px;">{{ departments.description }}</td>
-                    <td class="text-center">{{ countUsersPerDepartment[departments.id] }}</td>
+                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 250px;">{{ departments.description }}</td>
+                    <td class="d-none d-md-table-cell text-center">{{ countUsersPerDepartment[departments.id] }}</td>
                     <td class="text-center">
                         <a href="{{ path('gestion_equipe_department_show', {'id': departments.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                         <a href="{{ path('gestion_equipe_department_edit', {'id': departments.id}) }}" class="btn btn-sm btn-outline-primary">Modifier</a>
