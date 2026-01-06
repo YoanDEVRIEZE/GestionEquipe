@@ -15,7 +15,7 @@ $(document).ready(function () {
             url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json',
             emptyTable: 'Aucun utilisateur trouvé',
         },
-        dom: 'ft<"d-flex justify-content-end mt-4"p>',
+        dom: 'ft<"d-flex justify-content-end mt-4 mb-4"p>',
         initComplete: function () {
             $('#dataTable_filter').prependTo('#datatable-controls');
             $('#dataTable_filter')
