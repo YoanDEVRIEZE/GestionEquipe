@@ -23,7 +23,7 @@ services:
     Symfony\Component\Security\Http\Logout\LogoutUrlGenerator:
         alias: security.logout_url_generator
 
-    App\EventListener\CheckActiveUserListener:
+    App\EventListener\User\CheckActiveUserListener:
         tags:
         - { name: kernel.event_listener, event: kernel.request }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Bundle\SecurityBundle\Security;

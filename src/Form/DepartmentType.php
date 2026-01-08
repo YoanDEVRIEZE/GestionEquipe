@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Department;
+use App\EventListener\Department\NormalizeDepartmentListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DepartmentType extends AbstractType
@@ -34,6 +36,8 @@ class DepartmentType extends AbstractType
                 ],
                 'required' => false,
             ]);
+
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, [new NormalizeDepartmentListener(), 'onFormPreSubmit']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -46,7 +46,6 @@ final class DepartmentController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été créé avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,7 +75,6 @@ final class DepartmentController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été modifié avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,17 +89,15 @@ final class DepartmentController extends AbstractController
     {
         if ($department->getUsers()->isEmpty() === false) {
             $this->addFlash('error', '<b>Erreur</b> : Veuillez dans un premier temps supprimer les utilisateurs liés à ce service.');
-
             return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($this->isCsrfTokenValid('delete'.$department->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($department);
             $entityManager->flush();
-
-            $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été supprimé avec succès.');
         }
 
+        $this->addFlash('success', '<b>Confirmation</b> : Le service <b>'. $department->getName() .'</b> a été supprimé avec succès.');
         return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
     }
 }
