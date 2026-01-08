@@ -20,7 +20,6 @@ final class TeamController extends AbstractController
     public function index(TeamRepository $teamRepository): Response
     {   
         $team = $teamRepository->findAll();
-        $countTeam = $teamRepository->count([]);
         $countUsersPerTeam = [];
         
         foreach ($team as $teams) {
@@ -29,7 +28,7 @@ final class TeamController extends AbstractController
 
         return $this->render('team/index.html.twig', [
             'team' => $team,
-            'countTeam' => $countTeam,
+            'countTeam' => $teamRepository->count([]),
             'countUsersPerTeam' => $countUsersPerTeam,
         ]);
     }
@@ -46,7 +45,6 @@ final class TeamController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : l\'équipe <b>'. $team->getName() .'</b> a été créé avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,7 +74,6 @@ final class TeamController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : L\'équipe <b>'. $team->getName() .'</b> a été modifiée avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,17 +88,15 @@ final class TeamController extends AbstractController
     {
         if ($team->getUsers()->isEmpty() === false) {
             $this->addFlash('error', '<b>Erreur</b> : Veuillez dans un premier temps supprimer les utilisateurs liés à cette équipe.');
-
             return $this->redirectToRoute('gestion_equipe_team_index', [], Response::HTTP_SEE_OTHER);
         }
 
         if ($this->isCsrfTokenValid('delete'.$team->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($team);
             $entityManager->flush();
-
-            $this->addFlash('success', '<b>Confirmation</b> : L\'équipe <b>'. $team->getName() .'</b> à été suprimée avec succès.');
         }
 
+        $this->addFlash('success', '<b>Confirmation</b> : L\'équipe <b>'. $team->getName() .'</b> à été suprimée avec succès.');
         return $this->redirectToRoute('gestion_equipe_team_index', [], Response::HTTP_SEE_OTHER);
     }
 }
