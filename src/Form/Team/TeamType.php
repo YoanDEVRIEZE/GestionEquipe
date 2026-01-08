@@ -44,7 +44,7 @@ class TeamType extends AbstractType
                 ],
                 'constraints' => [
                     new Regex(
-                        pattern : '/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-\.,]+$/',
+                        pattern : "/^[A-Za-zÀ-ÖØ-öø-ÿœŒ0-9\s\-\.,'’]+$/",
                         message : 'La description ne doit contenir que des lettres, des chiffres, des espaces, des tirets, des points ou des virgules.',
                     ),
                 ],
