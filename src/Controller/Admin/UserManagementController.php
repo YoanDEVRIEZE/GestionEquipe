@@ -106,12 +106,11 @@ final class UserManagementController extends AbstractController
 
             $entityManager->remove($user);
             $entityManager->flush();
-
-            $this->addFlash('success', '<b>Confirmation</b> : l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> supprimé avec succès.');
         } else {
             $this->addFlash('error', 'Erreur : jeton CSRF invalide. La suppression de l\'utilisateur a échoué.');
         }
 
+        $this->addFlash('success', '<b>Confirmation</b> : l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> supprimé avec succès.');
         return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
     }
 }
