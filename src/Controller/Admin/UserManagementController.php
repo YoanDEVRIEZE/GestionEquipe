@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\DepartmentRepository;
+use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,21 +20,21 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class UserManagementController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, DepartmentRepository $departmentRepository): Response
+    public function index(UserRepository $userRepository, DepartmentRepository $departmentRepository, TeamRepository $teamRepository): Response
     {
-        $countUsers = $userRepository->count([]);
-        $department = $departmentRepository->findAll();
+        if ($departmentRepository->count([]) === 0) {
+            $this->addFlash('error', '<b>Erreur</b> : Aucun service n\'est défini. Veuillez créer des services avant de gérer les utilisateurs.');
+            return $this->redirectToRoute('gestion_equipe_department_index');
+        }
 
-        if ($department === []) {
-            $this->addFlash('error', '<b>Erreur</b> : Aucun département / service n\'est défini. Veuillez créer des départements / services avant de gérer les utilisateurs.');
-
-            return $this->redirectToRoute('gestion_equipe_department_index', [], Response::HTTP_SEE_OTHER);
-        
+        if ($teamRepository->count([]) === 0) {
+            $this->addFlash('error', '<b>Erreur</b> : Aucune équipe n\'est définie. Veuillez créer des équipes avant de gérer les utilisateurs.');
+            return $this->redirectToRoute('gestion_equipe_team_index');
         }
 
         return $this->render('user_management/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'countUsers' => $countUsers,
+            'countUsers' => $userRepository->count([]),
         ]);
     }
 
@@ -49,34 +50,15 @@ final class UserManagementController extends AbstractController
             $roles = $form->get('roles')->getData();
             $user->setRoles($roles);
 
-            if($plainPassword) {
+            if ($plainPassword) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
-
-            $compagnyId = strtoupper($user->getCompanyId());
-            $user->setCompanyId($compagnyId);
-
-            $lastname = strtoupper($user->getLastName());
-            $user->setLastName($lastname);
-
-            $firstname = ucfirst(strtolower($user->getFirstName()));
-            $user->setFirstName($firstname);
-
-            $adress = strtoupper($user->getAddress());
-            $user->setAddress($adress);
-
-            $mailPro = strtolower($user->getEmail());
-            $user->setEmail($mailPro);
-
-            $mailPrivate = strtolower($user->getEmailPrivate());
-            $user->setEmailPrivate($mailPrivate);
             
             $entityManager->persist($user);
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : nouvel utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ajouté avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -101,28 +83,9 @@ final class UserManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $compagnyId = strtoupper($user->getCompanyId());
-            $user->setCompanyId($compagnyId);
-
-            $lastname = strtoupper($user->getLastName());
-            $user->setLastName($lastname);
-
-            $firstname = ucfirst(strtolower($user->getFirstName()));
-            $user->setFirstName($firstname);
-
-            $adress = strtoupper($user->getAddress());
-            $user->setAddress($adress);
-
-            $mailPro = strtolower($user->getEmail());
-            $user->setEmail($mailPro);
-
-            $mailPrivate = strtolower($user->getEmailPrivate());
-            $user->setEmailPrivate($mailPrivate);
-
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
-
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -138,7 +101,6 @@ final class UserManagementController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             if ($this->getUser() === $user) {
                 $this->addFlash('error', '<b>Erreur</b> : Vous ne pouvez pas supprimer votre propre compte.');
-
                 return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
             }
 

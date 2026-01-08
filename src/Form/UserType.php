@@ -6,6 +6,7 @@ use App\Entity\Department;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Enum\RolesEnum;
+use App\EventListener\User\NormalizeUserListener;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -147,6 +149,8 @@ class UserType extends AbstractType
                 'help' => 'Sélectionnez la photo de profil de l\'utilisateur.',
                 'required' => false,
             ]);
+
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, [new NormalizeUserListener(), 'onFormPreSubmit']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
