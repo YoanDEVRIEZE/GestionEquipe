@@ -3,65 +3,60 @@
 {% block title %}Profil utilisateur{% endblock %}
 
 {% block main_content %}
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="mb-4">
-                <i class="bi bi-person-fill-gear me-2"></i> Profil de {{ user.firstName }} {{ user.lastName }}
-            </h1>
-            <div class="d-flex gap-2">
-                <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
-                <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-primary">Modifier</a>
-                <form method="post" 
-                action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" 
-                onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                    <button class="btn btn-danger" type="submit">Supprimer</button>
-                </form>
-            </div>
-        </div>
-        <div class="card shadow-sm me-md-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3 d-flex flex-column justify-content-center text-center">
-                        {% if user.avatar %}
-                            <img src="{{ asset(user.avatar) }}" alt="Avatar" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
-                        {% else %}
-                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 150px; height: 150px;">
-                                <span class="text-muted">Aucune photo</span>
-                            </div>
-                        {% endif %}
-                        <div>
-                            <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
-                                {{ user.isActive ? 'Actif' : 'Inactif' }}
-                            </span>
+    <h1 class="mb-1 mb-4">
+        <i class="bi bi-person-fill-gear me-2"></i> Profil de {{ user.firstName }} {{ user.lastName }}
+    </h1>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary me-2">← Retour à la liste</a>
+        <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}"
+            class="btn btn-primary me-2">Modifier</a>
+        <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+        </form>
+    </div>
+    <div class="card shadow-sm w-100">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-3 d-flex flex-column justify-content-center align-items-center text-center mb-3 mb-md-0">
+                    {% if user.avatar %}
+                        <img src="{{ asset(user.avatar) }}" alt="Avatar" class="img-fluid rounded-circle mb-3" style="max-width: 150px; width: 100%; height: auto;">
+                    {% else %}
+                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+                            <span class="text-muted">Aucune photo</span>
                         </div>
-                    </div>
-                    <div class="col-md-9">
+                    {% endif %}
+                    <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }} mb-3">
+                        {{ user.isActive ? 'Actif' : 'Inactif' }}
+                    </span>
+                </div>
+                <div class="col-12 col-md-9">
+                    <div class="table-responsive">
                         <table class="table table-borderless mb-0">
                             <tbody>
                                 <tr>
-                                    <th class="text-muted">Identifiant du salarié</th>
-                                    <td>{{ user.companyId ? user.companyId : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Identifiant du salarié</th>
+                                    <td class="p-1 p-md-2">{{ user.companyId ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Nom</th>
-                                    <td>{{ user.lastName ? user.lastName : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Nom</th>
+                                    <td class="p-1 p-md-2">{{ user.lastName ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Prénom</th>
-                                    <td>{{ user.firstName ? user.firstName : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Prénom</th>
+                                    <td class="p-1 p-md-2">{{ user.firstName ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Email professionnel</th>
-                                    <td>{{ user.email ? user.email : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Email professionnel</th>
+                                    <td class="p-1 p-md-2">{{ user.email ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Téléphone professionnel</th>
-                                    <td>{{ user.phonePro ? user.phonePro : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Téléphone professionnel</th>
+                                    <td class="p-1 p-md-2">{{ user.phonePro ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Poste occupé</th>
-                                    <td>
+                                    <th class="text-muted p-1 p-md-2">Poste occupé</th>
+                                    <td class="p-1 p-md-2">
                                         {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
                                         {% for role in rolesOrder %}
                                             {% if role in user.roles %}
@@ -77,20 +72,20 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Service</th>
-                                    <td>{{ user.department ? user.department.name : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Service</th>
+                                    <td class="p-1 p-md-2">{{ user.department ? user.department.name : '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Téléphone personnel</th>
-                                    <td>{{ user.phone ? user.phone : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Téléphone personnel</th>
+                                    <td class="p-1 p-md-2">{{ user.phone ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Email personnel</th>
-                                    <td>{{ user.emailPrivate ? user.emailPrivate : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Email personnel</th>
+                                    <td class="p-1 p-md-2">{{ user.emailPrivate ?: '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th class="text-muted">Adresse</th>
-                                    <td>{{ user.address ? user.address : '-' }}</td>
+                                    <th class="text-muted p-1 p-md-2">Adresse</th>
+                                    <td class="p-1 p-md-2">{{ user.address ?: '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>
