@@ -3,6 +3,7 @@
 namespace App\Form\User;
 
 use App\Entity\Department;
+use App\Entity\Skill;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Enum\RolesEnum;
@@ -161,7 +162,7 @@ class UserType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Service <sup style="color: red">*</sup>',
                 'label_html' => true,
-                'placeholder' => 'Sélectionner un service',
+                'placeholder' => 'Sélectionnez un service',
                 'attr' => [
                     'class' => 'form-select',
                 ],
@@ -173,12 +174,24 @@ class UserType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Equipe <sup style="color : red;">*</sup>',
                 'label_html' => true,
-                'placeholder' => 'Sélectionner une équipe',
+                'placeholder' => 'Sélectionnez une équipe',
                 'attr' => [
                     'class' => 'form-select',
                 ],
                 'help' => 'L\'équipe à laquelle l\'utilisateur appartient.',
                 'required' => true,
+            ])
+            ->add('skill', EntityType::class, [
+                'class' => Skill::class,
+                'choice_label' => 'name',
+                'label' => 'Les compétences',
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'help' => 'Sélectionnez la ou les compétences de l\'utilisateur.',
+                'required' => false,
             ])
             ->add('avatar', TextType::class, [
                 'label' => 'Photo de profil',

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-md-6">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            <b style="color: red;">{{ form_errors(form.name) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                {{ form_help(form.name) }}
+            </small>
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+            <b style="color: red;">{{ form_errors(form.description) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                {{ form_help(form.description) }}
+            </small>
+        </div>
+    </div>
+</div>
+

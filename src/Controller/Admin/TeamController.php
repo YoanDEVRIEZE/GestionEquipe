@@ -44,7 +44,7 @@ final class TeamController extends AbstractController
             $entityManager->persist($team);
             $entityManager->flush();
 
-            $this->addFlash('success', '<b>Confirmation</b> : l\'équipe <b>'. $team->getName() .'</b> a été créé avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : L\'équipe <b>'. $team->getName() .'</b> a été créé avec succès.');
             return $this->redirectToRoute('gestion_equipe_team_index', [], Response::HTTP_SEE_OTHER);
         }
 

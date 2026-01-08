@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mb-4">
     <div class="row g-3">
         <div class="col-md-6 d-flex align-items-center">
             <div class="form-check mt-4">
@@ -104,6 +104,21 @@
             <b style="color: red;">{{ form_errors(form.team) }}</b>
             <small class="form-text text-muted d-block mt-1">
                 {{ form_help(form.team) }}
+            </small>
+        </div>
+        <div class="col-md-6">
+            {{ form_label(form.skill) }}
+            <div class="d-flex flex-wrap gap-3">
+                {% for choice in form.skill %}
+                    <div class="form-check d-flex align-items-center">
+                        {{ form_widget(choice) }}
+                        {{ form_label(choice, null, { label_attr: { class: 'form-check-label text-black ms-1 mb-0' } }) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <b style="color: red;">{{ form_errors(form.skill) }}</b>
+            <small class="form-text text-muted d-block mt-1">
+                {{ form_help(form.skill) }}
             </small>
         </div>
         <div class="col-md-6">

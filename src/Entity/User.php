@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Enum\RolesEnum;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -88,6 +90,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Team $team = null;
+
+    /**
+     * @var Collection<int, Skill>
+     */
+    #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'users')]
+    private Collection $skill;
+
+    public function __construct()
+    {
+        $this->skill = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -293,6 +306,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTeam(?Team $team): static
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Skill>
+     */
+    public function getSkill(): Collection
+    {
+        return $this->skill;
+    }
+
+    public function addSkill(Skill $skill): static
+    {
+        if (!$this->skill->contains($skill)) {
+            $this->skill->add($skill);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): static
+    {
+        $this->skill->removeElement($skill);
 
         return $this;
     }
