@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Department;
 
 use App\Entity\Department;
 use App\EventListener\Department\NormalizeDepartmentListener;
@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class DepartmentType extends AbstractType
 {
@@ -24,6 +25,12 @@ class DepartmentType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Entrez le nom du service',
                 ],
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-]+$/',
+                        message : 'Le nom du service ne doit contenir que des lettres, des chiffres, des espaces ou des tirets.',
+                    ),
+                ],
                 'required' => true,
             ])
             ->add('description', TextareaType::class, [
@@ -33,6 +40,12 @@ class DepartmentType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Entrez une description pour le service',
                     'rows' => 6,
+                ],
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s\-\.,]+$/',
+                        message : 'La description ne doit contenir que des lettres, des chiffres, des espaces, des tirets, des points ou des virgules.',
+                    ),
                 ],
                 'required' => false,
             ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener\User;
+namespace App\EventListener\Team;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Form\Event\PreSubmitEvent;

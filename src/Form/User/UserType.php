@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\User;
 
 use App\Entity\Department;
 use App\Entity\Team;
@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
@@ -46,7 +47,13 @@ class UserType extends AbstractType
                     'placeholder' => 'Jean',
                 ],
                 'help' => 'Le prénom de l\'utilisateur (50 caractères maximum).',
-                'required' => true,
+                'constraints' => [
+                    new Regex(
+                        pattern: '/^[A-Za-zÀ-ÖØ-öø-ÿ]+([ -][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/',
+                        message: 'Le nom ne doit contenir que des lettres, des espaces ou des tirets.'
+                    ),
+                ],
+                'required' => true, 
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom <sup style="color: red">*</sup>',
@@ -56,6 +63,12 @@ class UserType extends AbstractType
                     'placeholder' => 'Dupont',
                 ],
                 'help' => 'Le nom de l\'utilisateur (50 caractères maximum).',
+                'constraints' => [
+                    new Regex(
+                        pattern: '/^[A-Za-zÀ-ÖØ-öø-ÿ]+([ -][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/',
+                        message: 'Le nom ne doit contenir que des lettres, des espaces ou des tirets.'
+                    ),
+                ],
                 'required' => true,
             ])
             ->add('emailPrivate', EmailType::class, [
@@ -74,6 +87,12 @@ class UserType extends AbstractType
                     'placeholder' => '0700000000',
                 ],
                 'help' => 'Le numéro de téléphone personnel de l\'utilisateur.',
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^\d{7,15}$/',
+                        message : 'Le numéro de téléphone doit contenir uniquement des chiffres.',
+                    ),
+                ],
                 'required' => false,
             ])
             ->add('phonePro', TextType::class, [
@@ -83,6 +102,12 @@ class UserType extends AbstractType
                     'placeholder' => '0320000000',
                 ],
                 'help' => 'Le numéro de téléphone professionnel de l\'utilisateur.',
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^\d{7,15}$/',
+                        message : 'Le numéro de téléphone doit contenir uniquement des chiffres.',
+                    ),
+                ],
                 'required' => false,
             ])
             ->add('companyId', TextType::class, [
@@ -90,6 +115,12 @@ class UserType extends AbstractType
                 'label_html' => true,
                 'attr' => ['class' => 'form-control'],
                 'help' => 'Identifiant interne de l\'utilisateur dans l\'entreprise (50 caractères maximum).',
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^[A-Za-z0-9]+$/',
+                        message : 'L\identifiant ne doit contenir que des lettres et des chiffres.',
+                    ),
+                ],
                 'required' => true,
             ])
             ->add('address', TextType::class, [
@@ -99,6 +130,12 @@ class UserType extends AbstractType
                     'placeholder' => '10 RUE DE PARIS 75000 PARIS',
                 ],
                 'help' => 'Adresse postale de l\'utilisateur (255 caractères maximum, facultatif).',
+                'constraints' => [
+                    new Regex(
+                        pattern : '/^[A-Za-z0-9À-ÖØ-öø-ÿ\s\-,]+$/',
+                        message : 'L’adresse ne doit contenir que des lettres, des chiffres, des espaces, des tirets ou des virgules.',
+                    ),
+                ],
                 'required' => false,
             ])
             ->add('roles', EnumType::class, [

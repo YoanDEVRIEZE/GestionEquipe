@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Department;
-use App\Form\DepartmentType;
+use App\Form\Department\DepartmentType;
 use App\Repository\DepartmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

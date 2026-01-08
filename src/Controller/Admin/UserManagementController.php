@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\User\UserType;
 use App\Repository\DepartmentRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
