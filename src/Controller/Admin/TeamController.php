@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/Accueil/Admin/Equipe')]
+#[Route('/Accueil/Admin/Equipes')]
 final class TeamController extends AbstractController
 {
     #[Route(name: 'gestion_equipe_team_index', methods: ['GET'])]

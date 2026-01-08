@@ -17,7 +17,7 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
                 $this->security->isGranted('ROLE_ADMIN')   => 'gestion_equipe_adminhome',
                 $this->security->isGranted('ROLE_MANAGER') => 'gestion_equipe_managerhome',
                 $this->security->isGranted('ROLE_USER')    => 'gestion_equipe_userhome',
-                default => null,
+                default => 'gestion_equipe_userhome',
             },
         ];
     }

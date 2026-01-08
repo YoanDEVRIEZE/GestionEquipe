@@ -411,3 +411,22 @@ a:focus {
     background-color: #007bff !important;
     color: #fff;
 }
+
+.sidebar-user a {
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-user:hover a {
+    background-color: rgb(113, 113, 113);
+}
+
+.sidebar-user i {
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s ease, transform 0.5s ease;
+}
+
+.sidebar-user:hover i {
+    opacity: 1;
+    transform: translateX(4px);
+}

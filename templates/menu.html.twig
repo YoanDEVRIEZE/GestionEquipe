@@ -9,7 +9,7 @@
             <h5 class="text-white m-0 sidebar-title">Gestion Équipe</h5>
         </div>
     </a>
-    <ul class="nav nav-pills flex-column gap-2">
+    <ul class="nav nav-pills flex-column gap-2 mb-4">
         {% if is_granted('ROLE_USER') %}
             <li class="nav-item mt-3 mb-1 text-white text-uppercase small sidebar-category">
                 <b>Collaborateur</b>
@@ -105,7 +105,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
+                <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
                 app.request.attributes.get('_route') starts with 'gestion_equipe_user_management' ? 'active' : '' }}"
                     href="{{ path('gestion_equipe_user_management_index') }}" title="Utilisateurs administrateur">
                     <i class="bi bi-person-fill-gear"></i>
@@ -113,7 +113,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link color-red text-white d-flex align-items-center gap-2 {{ 
+                <a class="nav-link color-green text-white d-flex align-items-center gap-2 {{ 
                 app.request.attributes.get('_route') starts with 'gestion_equipe_department' ? 'active' : '' }}"
                 href="{{ path('gestion_equipe_department_index') }}" title="Services administrateur">
                     <i class="bi bi-diagram-3"></i>
@@ -121,15 +121,34 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link color-green text-white d-flex align-items-center gap-2 {{ 
+                <a class="nav-link color-blue text-white d-flex align-items-center gap-2 {{ 
                 app.request.attributes.get('_route') starts with 'gestion_equipe_team' ? 'active' : '' }}"
                 href="{{ path('gestion_equipe_team_index') }}" title="Equipes administrateur">
-                    <i class="bi bi-person-vcard-fill me-2"></i> 
+                    <i class="bi bi-person-vcard-fill"></i> 
                     <span class="menu-text">Equipes</span>
                 </a>
             </li>
         {% endif %}
     </ul>
+    {% if app.user %}
+        <div class="pt-3 border-top border-secondary mt-auto sidebar-user">
+            <a href="" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
+                <div class="d-flex align-items-center gap-2">
+                    {% if app.user.avatar %}
+                        <img src="{{ asset(app.user.avatar) }}" alt="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" title="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" class="rounded-circle" width="40" height="40">
+                    {% else %}
+                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                            <span class="bi bi-person text-muted"></span>
+                        </div>
+                    {% endif %}
+                    <div class="fw-bold small menu-text">
+                        {{ app.user.firstname }} {{ app.user.lastname }}
+                    </div>
+                </div>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+    {% endif %}
 </nav>
 <div class="offcanvas offcanvas-start bg-dark text-white d-md-none" id="mobileSidebar">
     <div class="offcanvas-header">
@@ -138,7 +157,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <ul class="nav nav-pills flex-column gap-2">
+        <ul class="nav nav-pills flex-column gap-2 mb-4">
             {% if is_granted('ROLE_USER') %}
                 <li class="nav-item mt-2 mb-1 text-white text-uppercase small">
                     <b>Collaborateur</b>
@@ -245,5 +264,24 @@
                 </li>
             {% endif %}
         </ul>
+        {% if app.user %}
+            <div class="pt-3 border-top border-secondary mt-auto sidebar-user">
+                <a href="" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if app.user.avatar %}
+                            <img src="{{ asset(app.user.avatar) }}" alt="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" title="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" class="rounded-circle" width="40" height="40">
+                        {% else %}
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <span class="bi bi-person text-muted"></span>
+                            </div>
+                        {% endif %}
+                        <div class="fw-bold small">
+                            {{ app.user.firstname }} {{ app.user.lastname }}
+                        </div>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
