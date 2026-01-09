@@ -71,11 +71,9 @@ final class UserManagementController extends AbstractController
             if ($file) {
                 $safeFileName = $this->slugger->slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                 $newFileName = $safeFileName.'-'.uniqid().'.'.$file->guessExtension();
-
                 $file->move($this->getParameter('profile_pictures_directory'), $newFileName);
+                $user->setAvatar($newFileName);
             }
-
-            $user->setAvatar($newFileName);
             
             $entityManager->persist($user);
             $entityManager->flush();
@@ -112,11 +110,9 @@ final class UserManagementController extends AbstractController
             if ($file) {
                 $safeFileName = $this->slugger->slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                 $newFileName = $safeFileName.'-'.uniqid().'.'.$file->guessExtension();
-
                 $file->move($this->getParameter('profile_pictures_directory'), $newFileName);
+                $user->setAvatar($newFileName);
             }
-
-            $user->setAvatar($newFileName);
 
             $entityManager->flush();
 

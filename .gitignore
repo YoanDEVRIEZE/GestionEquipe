@@ -17,7 +17,7 @@
 
 ###> symfony/asset-mapper ###
 /public/assets/
-/public/uploads/profile/
+/public/uploads/profile/*
 !public/uploads/profile/.gitkeep
 /assets/vendor/
 ###< symfony/asset-mapper ###
