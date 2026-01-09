@@ -5,6 +5,9 @@
 # See also https://symfony.com/doc/current/service_container/import.html
 
 # Put parameters here that don't need to change on each machine where the app is deployed
+parameters:
+    profile_pictures_directory: '%kernel.project_dir%/public/uploads/profile'
+    
 twig:
     globals:
         app_version: '%env(APP_VERSION)%'

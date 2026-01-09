@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-12 col-md-3 d-flex flex-column justify-content-center align-items-center text-center mb-3 mb-md-0">
                     {% if user.avatar %}
-                        <img src="{{ asset(user.avatar) }}" alt="Avatar" class="img-fluid rounded-circle mb-3" style="max-width: 150px; width: 100%; height: auto;">
+                        <img src="{{ asset('uploads/profile/' ~ user.avatar) }}" alt="Avatar" class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="height: 150px; width: 150px; object-fit: cover;">
                     {% else %}
                         <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
                             <span class="text-muted">Aucune photo</span>

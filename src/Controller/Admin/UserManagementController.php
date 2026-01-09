@@ -15,11 +15,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/Accueil/Admin/Utilisateurs')]
 final class UserManagementController extends AbstractController
 {
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger) 
+    {
+        $this->slugger = $slugger;
+    }
+
     #[Route(name: 'gestion_equipe_user_management_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, DepartmentRepository $departmentRepository, TeamRepository $teamRepository): Response
     {
@@ -56,6 +65,18 @@ final class UserManagementController extends AbstractController
                 $user->setPassword($hashedPassword);
             }
             
+             /** @var UploadedFile|null $file */
+            $file = $form->get('avatar')->getData();
+
+            if ($file) {
+                $safeFileName = $this->slugger->slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$file->guessExtension();
+
+                $file->move($this->getParameter('profile_pictures_directory'), $newFileName);
+            }
+
+            $user->setAvatar($newFileName);
+            
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -85,6 +106,18 @@ final class UserManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+             /** @var UploadedFile|null $file */
+            $file = $form->get('avatar')->getData();
+
+            if ($file) {
+                $safeFileName = $this->slugger->slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+                $newFileName = $safeFileName.'-'.uniqid().'.'.$file->guessExtension();
+
+                $file->move($this->getParameter('profile_pictures_directory'), $newFileName);
+            }
+
+            $user->setAvatar($newFileName);
+
             $entityManager->flush();
 
             $this->addFlash('success', '<b>Confirmation</b> : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
@@ -105,6 +138,19 @@ final class UserManagementController extends AbstractController
             if ($this->getUser() === $user) {
                 $this->addFlash('error', '<b>Erreur</b> : Vous ne pouvez pas supprimer votre propre compte.');
                 return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            $fileName = $user->getAvatar();
+
+            if ($fileName) {
+                $baseName = basename($fileName);
+                $filePath = $this->getParameter('profile_pictures_directory').'/'.$baseName;
+            
+                if (!is_file($filePath)) {
+                    $this->addFlash('error', 'La photo de profile <b>'. $fileName . '</b> est introuvable.');
+                } elseif (!unlink($filePath)) {
+                    $this->addFlash('error', 'Impossible de supprimer la photo de profile '. $fileName);
+                }
             }
 
             $entityManager->remove($user);

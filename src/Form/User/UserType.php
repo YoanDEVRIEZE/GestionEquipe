@@ -15,9 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
@@ -209,14 +211,27 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('avatar', TextType::class, [
+            ->add('avatar', FileType::class, [
                 'label' => 'Photo de profil',
                 'attr' => ['class' => 'form-control'],
                 'help' => 'Sélectionnez la photo de profil de l\'utilisateur.',
                 'required' => false,
-            ]);
+                'mapped' => false,
+                'constraints' => [
+                    new Image(
+                        maxSize : '2M',
+                        mimeTypes : [
+                            'image/png',
+                            'image/jpeg',
+                            'image/webp',
+                        ],
+                        mimeTypesMessage : 'Formats autorisés : PNG, JPG, WEBP.'
+                    ),
+                ],
+            ]
+        );
 
-            $builder->addEventListener(FormEvents::PRE_SUBMIT, [new NormalizeUserListener(), 'onFormPreSubmit']);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [new NormalizeUserListener(), 'onFormPreSubmit']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
