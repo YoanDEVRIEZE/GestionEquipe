@@ -106,21 +106,23 @@
                 {{ form_help(form.team) }}
             </small>
         </div>
-        <div class="col-md-6">
-            {{ form_label(form.skill) }}
-            <div class="d-flex flex-wrap gap-3">
-                {% for choice in form.skill %}
-                    <div class="form-check d-flex align-items-center">
-                        {{ form_widget(choice) }}
-                        {{ form_label(choice, null, { label_attr: { class: 'form-check-label text-black ms-1 mb-0' } }) }}
-                    </div>
-                {% endfor %}
+        {% if skill > 0 %}
+            <div class="col-md-6">
+                {{ form_label(form.skill) }}
+                <div class="d-flex flex-wrap gap-3">
+                    {% for choice in form.skill %}
+                        <div class="form-check d-flex align-items-center">
+                            {{ form_widget(choice) }}
+                            {{ form_label(choice, null, { label_attr: { class: 'form-check-label text-black ms-1 mb-0' } }) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <b style="color: red;">{{ form_errors(form.skill) }}</b>
+                <small class="form-text text-muted d-block mt-1">
+                    {{ form_help(form.skill) }}
+                </small>
             </div>
-            <b style="color: red;">{{ form_errors(form.skill) }}</b>
-            <small class="form-text text-muted d-block mt-1">
-                {{ form_help(form.skill) }}
-            </small>
-        </div>
+        {% endif %}
         <div class="col-md-6">
             {{ form_label(form.avatar) }}
             {{ form_widget(form.avatar) }}

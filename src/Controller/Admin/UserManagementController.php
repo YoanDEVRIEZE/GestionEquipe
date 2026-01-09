@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\User\UserType;
 use App\Repository\DepartmentRepository;
+use App\Repository\SkillRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +40,7 @@ final class UserManagementController extends AbstractController
     }
 
     #[Route('/Ajouter', name: 'gestion_equipe_user_management_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SkillRepository $skillRepository): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user, ['edit' => true]);
@@ -65,6 +66,7 @@ final class UserManagementController extends AbstractController
         return $this->render('user_management/new.html.twig', [
             'user' => $user,
             'form' => $form,
+            'skill' => $skillRepository->count(),
         ]);
     }
 
@@ -77,7 +79,7 @@ final class UserManagementController extends AbstractController
     }
 
     #[Route('/{id}/Modifier', name: 'gestion_equipe_user_management_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, SkillRepository $skillRepository): Response
     {
         $form = $this->createForm(UserType::class, $user, ['edit' => true]);
         $form->handleRequest($request);
@@ -92,6 +94,7 @@ final class UserManagementController extends AbstractController
         return $this->render('user_management/edit.html.twig', [
             'user' => $user,
             'form' => $form,
+            'skill' => $skillRepository->count(),
         ]);
     }
 

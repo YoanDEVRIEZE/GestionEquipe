@@ -8,6 +8,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\EventListener\User\NormalizeUserListener;
+use App\Repository\SkillRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -21,6 +22,13 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
+    private readonly SkillRepository $skillRepository;
+
+    public function __construct(SkillRepository $skillRepository) 
+    {
+        $this->skillRepository = $skillRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -180,19 +188,27 @@ class UserType extends AbstractType
                 ],
                 'help' => 'L\'équipe à laquelle l\'utilisateur appartient.',
                 'required' => true,
-            ])
-            ->add('skill', EntityType::class, [
-                'class' => Skill::class,
-                'choice_label' => 'name',
-                'label' => 'Les compétences',
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => [
-                    'class' => 'form-check-input',
+            ]
+        );
+
+        if ($this->skillRepository->count() > 0) {
+            $builder
+                ->add('skill', EntityType::class, [
+                    'class' => Skill::class,
+                    'choice_label' => 'name',
+                    'label' => 'Les compétences',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'attr' => [
+                        'class' => 'form-check-input',
+                    ],
+                    'help' => 'Sélectionnez la ou les compétences de l\'utilisateur.',
+                    'required' => false,
                 ],
-                'help' => 'Sélectionnez la ou les compétences de l\'utilisateur.',
-                'required' => false,
-            ])
+            );
+        }
+
+        $builder
             ->add('avatar', TextType::class, [
                 'label' => 'Photo de profil',
                 'attr' => ['class' => 'form-control'],

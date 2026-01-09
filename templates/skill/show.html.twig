@@ -17,8 +17,8 @@
     <div class="d-flex justify-content-end align-items-center mb-3" id="datatable-controls">
         <a href="{{ path('gestion_equipe_skill_index') }}" class="btn btn-outline-secondary me-2">← Retour à la liste</a>
         <a href="{{ path('gestion_equipe_skill_edit', {'id': skill.id}) }}" class="btn btn-primary me-2">Modifier</a>
-        <form method="post" action="{{ path('gestion_equipe_skill_delete', {'id': skill.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer l\'équipe \'{{ team.name }}\' ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ team.id) }}">
+        <form method="post" action="{{ path('gestion_equipe_skill_delete', {'id': skill.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer l\'équipe \'{{ skill.name }}\' ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ skill.id) }}">
             <button class="btn btn-danger" type="submit">Supprimer</button>
         </form>
     </div>
