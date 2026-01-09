@@ -8,90 +8,121 @@
     </h1>
     <div class="d-flex justify-content-end align-items-center mb-3">
         <a href="{{ path('gestion_equipe_user_management_index') }}" class="btn btn-outline-secondary me-2">← Retour à la liste</a>
-        <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}"
-            class="btn btn-primary me-2">Modifier</a>
+        <a href="{{ path('gestion_equipe_user_management_edit', {'id': user.id}) }}" class="btn btn-primary me-2">Modifier</a>
         <form method="post" action="{{ path('gestion_equipe_user_management_delete', {'id': user.id}) }}" class="d-inline" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
             <button class="btn btn-danger" type="submit">Supprimer</button>
         </form>
     </div>
-    <div class="card shadow-sm w-100">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-md-3 d-flex flex-column justify-content-center align-items-center text-center mb-3 mb-md-0">
-                    {% if user.avatar %}
-                        <img src="{{ asset('uploads/profile/' ~ user.avatar) }}" alt="Avatar" class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="height: 150px; width: 150px; object-fit: cover;">
-                    {% else %}
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
-                            <span class="text-muted">Aucune photo</span>
+    <div class="row g-4"> 
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="mb-3">Les informations de l'utilisateur</h5>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-flex flex-column justify-content-center align-items-center text-center mb-3 mb-md-0">
+                            {% if user.avatar %}
+                                <img src="{{ asset('uploads/profile/' ~ user.avatar) }}" alt="Avatar" class="rounded-circle bg-light mb-3 ms-3" style="height: 150px; width: 150px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+                                    <span class="text-muted">Aucune photo</span>
+                                </div>
+                            {% endif %}
+                            <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }} mb-3 ms-3">
+                                {{ user.isActive ? 'Actif' : 'Inactif' }}
+                            </span>
                         </div>
-                    {% endif %}
-                    <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }} mb-3">
-                        {{ user.isActive ? 'Actif' : 'Inactif' }}
-                    </span>
-                </div>
-                <div class="col-12 col-md-9">
-                    <div class="table-responsive">
-                        <table class="table table-borderless mb-0">
-                            <tbody>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Identifiant du salarié</th>
-                                    <td class="p-1 p-md-2">{{ user.companyId ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Nom</th>
-                                    <td class="p-1 p-md-2">{{ user.lastName ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Prénom</th>
-                                    <td class="p-1 p-md-2">{{ user.firstName ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Email professionnel</th>
-                                    <td class="p-1 p-md-2">{{ user.email ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Téléphone professionnel</th>
-                                    <td class="p-1 p-md-2">{{ user.phonePro ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Poste occupé</th>
-                                    <td class="p-1 p-md-2">
-                                        {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
-                                        {% for role in rolesOrder %}
-                                            {% if role in user.roles %}
-                                                {% if role == 'ROLE_USER' %}
-                                                    <span class="badge bg-primary">Utilisateur</span>
-                                                {% elseif role == 'ROLE_MANAGER' %}
-                                                    <span class="badge bg-warning">Manager</span>
-                                                {% elseif role == 'ROLE_ADMIN' %}
-                                                    <span class="badge bg-danger">Administrateur</span>
+                        <div class="col-12 col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0 text-nowrap">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Identifiant du salarié</th>
+                                            <td class="p-1 p-md-2">{{ user.companyId ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Nom</th>
+                                            <td class="p-1 p-md-2">{{ user.lastName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Prénom</th>
+                                            <td class="p-1 p-md-2">{{ user.firstName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Email professionnel</th>
+                                            <td class="p-1 p-md-2">{{ user.email ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Téléphone professionnel</th>
+                                            <td class="p-1 p-md-2">{{ user.phonePro ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Poste occupé</th>
+                                            <td class="p-1 p-md-2">
+                                                {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
+                                                {% for role in rolesOrder %}
+                                                    {% if role in user.roles %}
+                                                        {% if role == 'ROLE_USER' %}
+                                                            <span class="badge bg-primary">Utilisateur</span>
+                                                        {% elseif role == 'ROLE_MANAGER' %}
+                                                            <span class="badge bg-warning">Manager</span>
+                                                        {% elseif role == 'ROLE_ADMIN' %}
+                                                            <span class="badge bg-danger">Administrateur</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Service</th>
+                                            <td class="p-1 p-md-2">{{ user.department ? user.department.name : '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Téléphone personnel</th>
+                                            <td class="p-1 p-md-2">{{ user.phone ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Email personnel</th>
+                                            <td class="p-1 p-md-2">{{ user.emailPrivate ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Adresse</th>
+                                            <td class="p-1 p-md-2">{{ user.address ?: '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+        {% if countSkill > 0 %}
+            <div class="col-8 col-sm-8 col-lg-4">
+                <div class="card shadow-sm w-100">
+                    <div class="card-body">
+                        <h5 class="mb-3">Les compétences</h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-sm mb-0 text-nowrap">
+                                <tbody>
+                                    {% for skills in skill %}
+                                        <tr>
+                                            <th class="text-muted">{{ skills.name }}</th>
+                                            <td>
+                                                {% if user in skills.users %}
+                                                    <span class="badge bg-success" style="width: 50px;">Oui</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger" style="width: 50px;">Non</span>
                                                 {% endif %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Service</th>
-                                    <td class="p-1 p-md-2">{{ user.department ? user.department.name : '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Téléphone personnel</th>
-                                    <td class="p-1 p-md-2">{{ user.phone ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Email personnel</th>
-                                    <td class="p-1 p-md-2">{{ user.emailPrivate ?: '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-muted p-1 p-md-2">Adresse</th>
-                                    <td class="p-1 p-md-2">{{ user.address ?: '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

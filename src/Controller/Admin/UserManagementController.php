@@ -90,10 +90,12 @@ final class UserManagementController extends AbstractController
     }
 
     #[Route('/{id}/Consulter', name: 'gestion_equipe_user_management_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(User $user, SkillRepository $skillRepository): Response
     {
         return $this->render('user_management/show.html.twig', [
             'user' => $user,
+            'countSkill' => $skillRepository->count(),
+            'skill' => $skillRepository->findAll(),
         ]);
     }
 
