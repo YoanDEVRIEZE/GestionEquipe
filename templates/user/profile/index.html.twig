@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello User/ProfileController!{% endblock %}
+
+{% block main_content %}
+    <h1 class="mb-1 mb-4">
+        <i class="bi bi-person-fill-gear me-2"></i> Profil de {{ user.firstName }} {{ user.lastName }}
+    </h1>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <a href="" class="btn btn-primary me-2">Modifier mon profil</a>
+        <a href="{{ path('gestion_equipe_logout') }}" class="btn btn-danger me-2">Me deconnecter</a>
+    </div>
+    <div class="row g-4"> 
+        <div class="col-12 col-lg-12">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="mb-4">Mon profil</h5>
+                    <div class="row">
+                        <div class="col-12 col-md-3 d-flex flex-column justify-content-center align-items-center text-center mb-3 mb-md-0">
+                            {% if user.avatar %}
+                                <img src="{{ asset('uploads/profile/' ~ user.avatar) }}" alt="Avatar" class="rounded-circle bg-light mb-3 ms-3" style="height: 150px; width: 150px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+                                    <span class="text-muted">Aucune photo</span>
+                                </div>
+                            {% endif %}
+                            <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }} mb-3 ms-3">
+                                {{ user.isActive ? 'Actif' : 'Inactif' }}
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0 text-nowrap">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Identifiant</th>
+                                            <td class="p-1 p-md-2">{{ user.companyId ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Nom</th>
+                                            <td class="p-1 p-md-2">{{ user.lastName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Prénom</th>
+                                            <td class="p-1 p-md-2">{{ user.firstName ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Email professionnel</th>
+                                            <td class="p-1 p-md-2">{{ user.email ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Téléphone professionnel</th>
+                                            <td class="p-1 p-md-2">{{ user.phonePro ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Mon poste</th>
+                                            <td class="p-1 p-md-2">
+                                                {% set rolesOrder = ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN'] %}
+                                                {% for role in rolesOrder %}
+                                                    {% if role in user.roles %}
+                                                        {% if role == 'ROLE_USER' %}
+                                                            <span class="badge bg-primary">Utilisateur</span>
+                                                        {% elseif role == 'ROLE_MANAGER' %}
+                                                            <span class="badge bg-warning">Manager</span>
+                                                        {% elseif role == 'ROLE_ADMIN' %}
+                                                            <span class="badge bg-danger">Administrateur</span>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Service</th>
+                                            <td class="p-1 p-md-2">{{ user.department ? user.department.name : '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Téléphone personnel</th>
+                                            <td class="p-1 p-md-2">{{ user.phone ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Email personnel</th>
+                                            <td class="p-1 p-md-2">{{ user.emailPrivate ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-muted p-1 p-md-2">Adresse</th>
+                                            <td class="p-1 p-md-2">{{ user.address ?: '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+    </div>
+{% endblock %}

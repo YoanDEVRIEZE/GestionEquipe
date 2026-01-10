@@ -39,7 +39,7 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        - { path: ^/Accueil/Utilisateur, roles: ROLE_USER }
+        - { path: ^/Accueil/Utilisateur, roles: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] }
         - { path: ^/Accueil/Manager, roles: ROLE_MANAGER }
         - { path: ^/Accueil/Admin, roles: ROLE_ADMIN }
 

@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/')]
+#[Route('/Accueil')]
 final class HomeController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
-    #[Route('/Utilisateur/Utilisateur/Tableau_de_bord', name: 'gestion_equipe_userhome')]
-    public function userHome(string $user,): Response
+    #[Route('/Utilisateur/Tableau_de_bord', name: 'gestion_equipe_user_home')]
+    public function userHome(): Response
     {
         return $this->render('home/index.user.html.twig', [
             'controller_name' => 'HomeController',
@@ -20,7 +20,7 @@ final class HomeController extends AbstractController
     }
 
     #[IsGranted('ROLE_MANAGER')]
-    #[Route('/Accueil/Manager/Tableau_de_bord', name: 'gestion_equipe_managerhome')]
+    #[Route('/Manager/Tableau_de_bord', name: 'gestion_equipe_manager_home')]
     public function managerHome(): Response
     {
         return $this->render('home/index.manager.html.twig', [
@@ -29,7 +29,7 @@ final class HomeController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/Accueil/Admin/Tableau_de_bord', name: 'gestion_equipe_adminhome')]
+    #[Route('/Administrateur/Tableau_de_bord', name: 'gestion_equipe_admin_home')]
     public function adminHome(): Response
     {
         return $this->render('home/index.admin.html.twig', [

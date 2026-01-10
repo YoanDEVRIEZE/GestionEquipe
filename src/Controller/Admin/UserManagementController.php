@@ -52,7 +52,7 @@ final class UserManagementController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, SkillRepository $skillRepository): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user, ['edit' => true]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -78,7 +78,7 @@ final class UserManagementController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', '<b>Confirmation</b> : nouvel utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ajouté avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : L\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> a été ajouté avec succès.');
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -102,7 +102,7 @@ final class UserManagementController extends AbstractController
     #[Route('/{id}/Modifier', name: 'gestion_equipe_user_management_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, SkillRepository $skillRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user, ['edit' => true]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,7 +118,7 @@ final class UserManagementController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', '<b>Confirmation</b> : les informations de l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> ont été mises à jour avec succès.');
+            $this->addFlash('success', '<b>Confirmation</b> : L\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> a été mises à jour avec succès.');
             return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -157,7 +157,7 @@ final class UserManagementController extends AbstractController
             $this->addFlash('error', 'Erreur : jeton CSRF invalide. La suppression de l\'utilisateur a échoué.');
         }
 
-        $this->addFlash('success', '<b>Confirmation</b> : l\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> supprimé avec succès.');
+        $this->addFlash('success', '<b>Confirmation</b> : L\'utilisateur <b>' . $user->getFirstName() . ' ' . $user->getLastName() . '</b> a été supprimé avec succès.');
         return $this->redirectToRoute('gestion_equipe_user_management_index', [], Response::HTTP_SEE_OTHER);
     }
 }

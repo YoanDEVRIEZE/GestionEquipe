@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var list<string> The user roles
      */
     #[ORM\Column(enumType: RolesEnum::class)]
-    #[Assert\Count(min: 1, minMessage: 'Veuillez selectionner un poste minimum.')]
+    #[Assert\Count(max: 1, maxMessage: 'Veuillez selectionner un poste maximum.')]
     private array $roles = [];
 
     /**

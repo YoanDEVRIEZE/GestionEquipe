@@ -17,14 +17,14 @@ class SecurityController extends AbstractController
 
         if ($this->getUser()) {
             if ($this->isGranted('ROLE_ADMIN')) {
-                return $this->redirectToRoute('gestion_equipe_adminhome');
+                return $this->redirectToRoute('gestion_equipe_admin_home');
             }
 
             if ($this->isGranted('ROLE_MANAGER')) {
-                return $this->redirectToRoute('gestion_equipe_managerhome');
+                return $this->redirectToRoute('gestion_equipe_manager_home');
             }
 
-            return $this->redirectToRoute('gestion_equipe_userhome');
+            return $this->redirectToRoute('gestion_equipe_user_home');
         }
 
         return $this->render('security/login.html.twig', [

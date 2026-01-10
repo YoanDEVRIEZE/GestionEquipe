@@ -14,10 +14,10 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
     {
         return [
             'tdb' => match (true) {
-                $this->security->isGranted('ROLE_ADMIN')   => 'gestion_equipe_adminhome',
-                $this->security->isGranted('ROLE_MANAGER') => 'gestion_equipe_managerhome',
-                $this->security->isGranted('ROLE_USER')    => 'gestion_equipe_userhome',
-                default => 'gestion_equipe_userhome',
+                $this->security->isGranted('ROLE_ADMIN')   => 'gestion_equipe_admin',
+                $this->security->isGranted('ROLE_MANAGER') => 'gestion_equipe_manager',
+                $this->security->isGranted('ROLE_USER')    => 'gestion_equipe_user',
+                default => 'gestion_equipe_user',
             },
         ];
     }

@@ -2,7 +2,7 @@
     <i class="bi bi-list"></i>
 </button>
 <nav id="sidebar" class="position-fixed top-0 start-0 vh-100 p-3 d-none d-md-flex flex-column">
-    <a href="{{ path(tdb) }}">
+    <a href="{{ path(tdb  ~ '_home') }}">
         <div class="sidebar-header d-flex flex-column align-items-center mb-4">
             <img src="{{ asset('images/logo.png') }}" alt="Gestion Équipe" title="Gestion Équipe"
                 class="mb-2 sidebar-logo">
@@ -16,8 +16,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
-                app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
-                href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
+                app.request.attributes.get('_route') ==  tdb ~ '_home' ? 'active' : '' }}"
+                href="{{ path(tdb ~ '_home') }}" title="Tableau de bord collaborateur">
                     <i class="bi bi-speedometer2"></i>
                     <span class="menu-text">Tableau de bord</span>
                 </a>
@@ -57,8 +57,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
-                app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
-                href="{{ path(tdb) }}" title="Tableau de bord manager">
+                app.request.attributes.get('_route') == tdb ~ '_home' ? 'active' : '' }}" 
+                href="{{ path(tdb ~ '_home') }}" title="Tableau de bord manager">
                     <i class="bi bi-speedometer"></i>
                     <span class="menu-text">Tableau de bord</span>
                 </a>
@@ -98,8 +98,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link color-yellow text-white d-flex align-items-center gap-2 {{ 
-                app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
-                href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
+                app.request.attributes.get('_route') == tdb ~ '_home' ? 'active' : '' }}"
+                href="{{ path(tdb ~ '_home') }}" title="Tableau de bord collaborateur">
                     <i class="bi bi-speedometer"></i>
                     <span class="menu-text">Tableau de bord</span>
                 </a>
@@ -140,7 +140,7 @@
     </ul>
     {% if app.user %}
         <div class="pt-3 border-top border-secondary mt-auto sidebar-user">
-            <a href="" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
+            <a href="{{ path('gestion_equipe_user_profile', { id: app.user.id }) }}" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
                 <div class="d-flex align-items-center gap-2">
                     {% if app.user.avatar %}
                         <img src="{{ asset('uploads/profile/' ~ app.user.avatar) }}" alt="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" title="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; object-fit: cover;">
@@ -172,8 +172,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link color-yellow text-white {{ 
-                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}"
-                    href="{{ path(tdb) }}" title="Tableau de bord collaborateur">
+                    app.request.attributes.get('_route') == tdb ~ '_home' ? 'active' : '' }}"
+                    href="{{ path(tdb ~ '_home') }}" title="Tableau de bord collaborateur">
                         <i class="bi bi-speedometer2 me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -208,8 +208,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link color-yellow text-white {{ 
-                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
-                    href="{{ path(tdb) }}" title="Tableau de bord manager">
+                    app.request.attributes.get('_route') == tdb ~ '_home' ? 'active' : '' }}" 
+                    href="{{ path(tdb ~ '_home') }}" title="Tableau de bord manager">
                         <i class="bi bi-speedometer me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -244,8 +244,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link color-yellow text-white {{ 
-                    app.request.attributes.get('_route') == tdb ? 'active' : '' }}" 
-                    href="{{ path(tdb) }}" title="Tableau de bord manager">
+                    app.request.attributes.get('_route') == tdb ~ '_home' ? 'active' : '' }}" 
+                    href="{{ path(tdb ~ '_home') }}" title="Tableau de bord manager">
                         <i class="bi bi-speedometer me-2"></i> Tableau de bord
                     </a>
                 </li>
@@ -281,7 +281,7 @@
         </ul>
         {% if app.user %}
             <div class="pt-3 border-top border-secondary mt-auto sidebar-user">
-                <a href="" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
+                <a href="{{ path('gestion_equipe_user_profile', { id: app.user.id }) }}" class="d-flex align-items-center justify-content-between text-white text-decoration-none px-2 py-2 rounded">
                     <div class="d-flex align-items-center gap-2">
                         {% if app.user.avatar %}
                             <img src="{{ asset('uploads/profile/' ~ app.user.avatar) }}" alt="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" title="Photo de profil de {{ app.user.firstName }} {{ app.user.lastName }}" class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; object-fit: cover;">
